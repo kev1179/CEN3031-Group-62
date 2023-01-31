@@ -1,38 +1,20 @@
-/*
-GORM SAMPLE CODE
-package main
-
-import (
-	"fmt"
-
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-)
-
-type Product struct {
-	gorm.Model
-	Code  string
-	Price uint
-}
-
-func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-	db.AutoMigrate(&Product{})
-
-	fmt.Println("Ran correctly!")
-}
-*/
-
 package main
 
 import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
+
+type User struct {
+	Firstname string
+	Lastname  string
+	Username  string
+	Password  string
+}
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
@@ -45,10 +27,38 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
 
-	fmt.Println(firstName)
-	fmt.Println(lastName)
-	fmt.Println(userName)
-	fmt.Println(password)
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	user := User{Firstname: firstName, Lastname: lastName, Username: userName, Password: password}
+	db.Create(&user)
+}
+
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+	fmt.Println(w, "POST request successful")
+	userName := r.FormValue("username")
+	password := r.FormValue("password")
+
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+	var user User
+	db.Where("Username = ?", userName).First(&user)
+
+	if password == user.Password {
+		fmt.Println("Login Successful!")
+	} else {
+		fmt.Println("Username not found or password incorrect")
+	}
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
@@ -69,6 +79,7 @@ func main() {
 	fileServer := http.FileServer(http.Dir("."))
 	http.Handle("/", fileServer)
 	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/hello", helloHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
