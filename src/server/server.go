@@ -70,6 +70,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Username not found or password incorrect")
 		}
 	}
+
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
