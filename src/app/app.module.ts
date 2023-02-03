@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { UserLoginComponent } from './login/user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration/user-registration.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
