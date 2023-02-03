@@ -14,6 +14,7 @@ type User struct {
 	Lastname  string
 	Username  string
 	Password  string
+	Email     string
 }
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,6 +27,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	lastName := r.FormValue("lname")
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
+	email := r.FormValue("email")
 
 	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
 
@@ -33,8 +35,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		panic("failed to connect database")
 	}
 
-	user := User{Firstname: firstName, Lastname: lastName, Username: userName, Password: password}
-	db.Create(&user)
+	user := User{Firstname: firstName, Lastname: lastName, Username: userName, Password: password, Email: email}
+	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
+		db.Create(&user)
+	} else {
+		fmt.Println("Username already taken. Please choose a different one")
+	}
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
@@ -55,11 +61,14 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var user User
 	db.Where("Username = ?", userName).First(&user)
-
-	if password == user.Password {
-		fmt.Println("Login Successful!")
-	} else {
+	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
 		fmt.Println("Username not found or password incorrect")
+	} else {
+		if password == user.Password {
+			fmt.Println("Login Successful!")
+		} else {
+			fmt.Println("Username not found or password incorrect")
+		}
 	}
 }
 
