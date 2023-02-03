@@ -38,10 +38,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
+
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
+
 	fmt.Println(w, "POST request successful")
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
