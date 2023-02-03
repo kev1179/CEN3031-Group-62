@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="text-center">
+                    <h1>Login</h1>
+                    <h6>Please enter email & password</h6>
+                </div>
+                <form target="_blank" action="http://localhost:8080/login" method="post">
+                    <div class="mb-3">
+                        <label for="exampleInputUsername1" class="form-label">Username</label>
+                        <input type="username" class="form-control" id="exampleInputUsername1" aria-describedby="UsernameHelp">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Login</button>
+                      <a routerLink="/user-registration">New User? Join now</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
