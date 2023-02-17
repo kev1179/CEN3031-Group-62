@@ -7,6 +7,7 @@ import (
 	"testing"
 )
 
+// Hello world test
 func TestHelloWorld(t *testing.T) {
 
 	got := "My first test :D"
@@ -17,6 +18,7 @@ func TestHelloWorld(t *testing.T) {
 	}
 }
 
+// Basic function test
 func TestSample(t *testing.T) {
 
 	got := add(11, 7)
@@ -27,6 +29,7 @@ func TestSample(t *testing.T) {
 	}
 }
 
+// Simple GET request test
 func TestGetRequest(t *testing.T) {
 
 	/*
@@ -34,7 +37,7 @@ func TestGetRequest(t *testing.T) {
 			log.Fatal(err)
 		}
 	*/
-	resp, err := http.Get("http:localhost:8080/getTest")
+	resp, err := http.Get("http://localhost:8080/getTest")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -45,7 +48,6 @@ func TestGetRequest(t *testing.T) {
 	}
 	//Convert the body to type string
 	sb := string(body)
-	log.Printf(sb)
 	got := sb
 	want := "Hello :)"
 
