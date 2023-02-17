@@ -117,6 +117,10 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello!")
 }
 
+func add(x, y int) (res int) {
+	return x + y
+}
+
 func main() {
 	var user User
 	fileServer := http.FileServer(http.Dir("."))
