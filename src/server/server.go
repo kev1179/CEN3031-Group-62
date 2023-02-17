@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -8,7 +9,7 @@ import (
 	"net/http"
 	"os"
 
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -36,7 +37,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	email := r.FormValue("email")
 
-	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open("users.db"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
@@ -61,7 +62,7 @@ func (activeUser ActiveUser) loginHandler(w http.ResponseWriter, r *http.Request
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
 
-	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open("users.db"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
@@ -125,6 +126,14 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/getTest", getRequestTest)
 	http.HandleFunc("/getUsername", getActiveUsername)
+
+	db, err := sql.Open("mysql", "root:mkap3031CEN@tcp(127.0.0.1:3306)/testdb")
+	if err != nil {
+		panic(err.Error())
+	} else {
+		fmt.Println("Successfully Connected to MySQL database")
+	}
+	defer db.Close()
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
