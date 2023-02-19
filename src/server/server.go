@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,9 +9,13 @@ import (
 	"os"
 	"time"
 
-	"gorm.io/driver/mysql"
+	"github.com/google/uuid"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
+
+// map stores all users
+var userMap = map[string]User{}
 
 // Class to represent user data. This will have to be expanded as the site grows.
 type User struct {
@@ -23,10 +26,15 @@ type User struct {
 	Email     string
 }
 
+// map stores user sessions
+var sessions = map[string]Session{}
+
 // Keeps track of the active user in the browsing session. This may need to be removed as I think a cookie based approach to this problem is better
 // https://www.sohamkamani.com/golang/session-cookie-authentication/
-type ActiveUser struct {
-	user User
+type Session struct {
+	// we can use user class as attribute or just username string
+	user   User
+	expiry time.Time
 }
 
 // Keeps track of data when user makes a comment. We need to figure out how to seperate the comments by page.
@@ -35,6 +43,11 @@ type Comment struct {
 	Time     string
 	Message  string
 	Page     string
+}
+
+// Determines if session has expired
+func (s Session) isExpired() bool {
+	return s.expiry.Before(time.Now())
 }
 
 // Registers a new user into the database.
@@ -50,7 +63,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	email := r.FormValue("email")
 
-	db, err := gorm.Open(mysql.Open("users.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
@@ -65,7 +78,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Determines if a login attempt was successful.
-func (activeUser ActiveUser) loginHandler(w http.ResponseWriter, r *http.Request) {
+func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
@@ -76,26 +89,48 @@ func (activeUser ActiveUser) loginHandler(w http.ResponseWriter, r *http.Request
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
 
-	db, err := gorm.Open(mysql.Open("users.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
 	}
+
 	var user User
+	sessionToken := ""
+	var expiresAt time.Time
+
 	db.Where("Username = ?", userName).First(&user)
 	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
 		fmt.Println("Username not found or password incorrect")
 	} else {
 		if password == user.Password {
 			fmt.Println("Login Successful!")
-			activeUser.user = user
+
+			// uuids are super helpful as they're difficult to guess
+			sessionToken = uuid.NewString()
+			expiresAt = time.Now().Add(120 * time.Second)
+
+			sessions[sessionToken] = Session{
+				user:   user,
+				expiry: expiresAt,
+			}
 		} else {
 			fmt.Println("Username not found or password incorrect")
 		}
 	}
-	file, _ := json.MarshalIndent(activeUser.user, "", " ")
-	_ = ioutil.WriteFile("activeuser.json", file, 0644)
-	http.Redirect(w, r, "http://localhost:4200/about", 301)
+	if len(sessionToken) > 0 {
+		file, _ := json.MarshalIndent(sessions[sessionToken], "", " ")
+		_ = ioutil.WriteFile("activeuser.json", file, 0644)
+		http.Redirect(w, r, "http://localhost:4200/about", 301)
+
+		// set the client cookie for "session_token" as the session token we just generated
+		// expiry time will be set to 120 seconds; we can always change this later
+		http.SetCookie(w, &http.Cookie{
+			Name:    "session_token",
+			Value:   sessionToken,
+			Expires: expiresAt,
+		})
+	}
 }
 
 // Sample get request for front-end team to try
@@ -155,6 +190,114 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello!")
 }
 
+// SOURCE: https://www.sohamkamani.com/golang/session-cookie-authentication/
+func welcomeHandler(w http.ResponseWriter, r *http.Request) {
+	// We can obtain the session token from the requests cookies, which come with every request
+	c, err := r.Cookie("session_token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			// If the cookie is not set, return an unauthorized status
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		// For any other type of error, return a bad request status
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	sessionToken := c.Value
+
+	// We then get the session from our session map
+	userSession, exists := sessions[sessionToken]
+	if !exists {
+		// If the session token is not present in session map, return an unauthorized error
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	// If the session is present, but has expired, we can delete the session, and return
+	// an unauthorized status
+	if userSession.isExpired() {
+		delete(sessions, sessionToken)
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	// If the session is valid, return the welcome message to the user
+	w.Write([]byte(fmt.Sprintf("Welcome %s!", userSession.user.Username)))
+}
+
+func refreshHandler(w http.ResponseWriter, r *http.Request) {
+	// (BEGIN) The code from this point is the same as the first part of the `Welcome` route
+	c, err := r.Cookie("session_token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	sessionToken := c.Value
+
+	userSession, exists := sessions[sessionToken]
+	if !exists {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	if userSession.isExpired() {
+		delete(sessions, sessionToken)
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	// (END) The code until this point is the same as the first part of the `Welcome` route
+
+	// If the previous session is valid, create a new session token for the current user
+	newSessionToken := uuid.NewString()
+	expiresAt := time.Now().Add(120 * time.Second)
+
+	// Set the token in the session map, along with the user whom it represents
+	sessions[newSessionToken] = Session{
+		user:   userSession.user,
+		expiry: expiresAt,
+	}
+
+	// Delete the older session token
+	delete(sessions, sessionToken)
+
+	// Set the new token as the users `session_token` cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session_token",
+		Value:   newSessionToken,
+		Expires: time.Now().Add(120 * time.Second),
+	})
+}
+
+func logoutHandler(w http.ResponseWriter, r *http.Request) {
+	c, err := r.Cookie("session_token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			// If the cookie is not set, return an unauthorized status
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		// For any other type of error, return a bad request status
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	sessionToken := c.Value
+
+	// remove the users session from the session map
+	delete(sessions, sessionToken)
+
+	// We need to let the client know that the cookie is expired
+	// In the response, we set the session token to an empty
+	// value and set its expiry as the current time
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session_token",
+		Value:   "",
+		Expires: time.Now(),
+	})
+}
+
 // IGNORE: for unit testing setup
 func add(x, y int) (res int) {
 	return x + y
@@ -162,23 +305,17 @@ func add(x, y int) (res int) {
 
 // Starts server and sets URL's front-end can send requests to
 func main() {
-	var user User
 	fileServer := http.FileServer(http.Dir("."))
 	http.Handle("/", fileServer)
 	http.HandleFunc("/register", registerHandler)
-	http.HandleFunc("/login", ActiveUser{user}.loginHandler)
+	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/hello", helloHandler)
+	http.HandleFunc("/welcome", welcomeHandler)
+	http.HandleFunc("/refresh", refreshHandler)
+	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/getTest", getRequestTest)
 	http.HandleFunc("/getUsername", getActiveUsername)
 	http.HandleFunc("/postComment", commentHandler)
-
-	db, err := sql.Open("mysql", "root:mkap3031CEN@tcp(127.0.0.1:3306)/testdb")
-	if err != nil {
-		panic(err.Error())
-	} else {
-		fmt.Println("Successfully Connected to MySQL database")
-	}
-	defer db.Close()
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
