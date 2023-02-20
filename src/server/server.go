@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/google/uuid"
@@ -137,21 +136,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 func getRequestTest(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello :)")
 
-}
-
-// Sends the current user over to the front end team. As mentioned before we may need to do this completely differently.
-func getActiveUsername(w http.ResponseWriter, r *http.Request) {
-
-	jsonFile, err := os.Open("activeuser.json")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	var activeUser User
-	json.Unmarshal(byteValue, &activeUser)
-	fmt.Fprintf(w, activeUser.Username)
-	defer jsonFile.Close()
 }
 
 // Puts a comment into the database when user creates a comment.
@@ -314,7 +298,6 @@ func main() {
 	http.HandleFunc("/refresh", refreshHandler)
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/getTest", getRequestTest)
-	http.HandleFunc("/getUsername", getActiveUsername)
 	http.HandleFunc("/postComment", commentHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
