@@ -9,12 +9,14 @@ import { MatSliderModule } from '@angular/material/slider';
 import { UserLoginComponent } from './login/user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration/user-registration.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserLoginComponent,
     UserRegistrationComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
