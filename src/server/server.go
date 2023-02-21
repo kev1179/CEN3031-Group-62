@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
@@ -100,6 +98,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	db.Where("Username = ?", userName).First(&user)
 	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Println("Username not found or password incorrect")
 	} else {
 		if password == user.Password {
@@ -113,23 +112,18 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 				user:   user,
 				expiry: expiresAt,
 			}
+
+			http.SetCookie(w, &http.Cookie{
+				Name:    "session_token",
+				Value:   sessionToken,
+				Expires: expiresAt,
+			})
+
 		} else {
 			fmt.Println("Username not found or password incorrect")
 		}
 	}
-	if len(sessionToken) > 0 {
-		file, _ := json.MarshalIndent(sessions[sessionToken], "", " ")
-		_ = ioutil.WriteFile("activeuser.json", file, 0644)
-		http.Redirect(w, r, "http://localhost:4200/about", 301)
-
-		// set the client cookie for "session_token" as the session token we just generated
-		// expiry time will be set to 120 seconds; we can always change this later
-		http.SetCookie(w, &http.Cookie{
-			Name:    "session_token",
-			Value:   sessionToken,
-			Expires: expiresAt,
-		})
-	}
+	http.Redirect(w, r, "http://localhost:4200/about", 301)
 }
 
 // Sample get request for front-end team to try
