@@ -100,10 +100,11 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Println("Username not found or password incorrect")
+		fmt.Fprintf(w, "false")
 	} else {
 		if password == user.Password {
 			fmt.Println("Login Successful!")
-
+			fmt.Fprintf(w, "true")
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
 			expiresAt = time.Now().Add(120 * time.Second)
@@ -121,6 +122,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 		} else {
 			fmt.Println("Username not found or password incorrect")
+			fmt.Fprintf(w, "false")
 		}
 	}
 	http.Redirect(w, r, "http://localhost:4200/about", 301)

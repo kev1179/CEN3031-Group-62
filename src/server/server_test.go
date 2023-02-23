@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"testing"
 )
 
@@ -32,11 +33,6 @@ func TestSample(t *testing.T) {
 // Simple GET request test
 func TestGetRequest(t *testing.T) {
 
-	/*
-		if err := http.ListenAndServe(":8080", nil); err != nil {
-			log.Fatal(err)
-		}
-	*/
 	resp, err := http.Get("http://localhost:8080/getTest")
 	if err != nil {
 		log.Fatalln(err)
@@ -50,6 +46,30 @@ func TestGetRequest(t *testing.T) {
 	sb := string(body)
 	got := sb
 	want := "Hello :)"
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+}
+
+func TestLogin(t *testing.T) {
+
+	data := url.Values{
+		"username": {"1234"},
+		"password": {"1234"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/login", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "true"
 
 	if got != want {
 		t.Errorf("got %q, wanted %q", got, want)
