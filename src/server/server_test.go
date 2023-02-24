@@ -54,6 +54,7 @@ func TestGetRequest(t *testing.T) {
 
 func TestLogin(t *testing.T) {
 
+	//Successful login attempt
 	data := url.Values{
 		"username": {"1234"},
 		"password": {"1234"},
@@ -74,4 +75,50 @@ func TestLogin(t *testing.T) {
 	if got != want {
 		t.Errorf("got %q, wanted %q", got, want)
 	}
+
+	//Unsuccessful login attempt
+	data = url.Values{
+		"username": {"1234"},
+		"password": {"1235"},
+	}
+
+	resp, err = http.PostForm("http://localhost:8080/login", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err = ioutil.ReadAll(resp.Body)
+	result = string(body)
+	got = result
+	want = "false"
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+}
+
+func TestComment(t *testing.T) {
+
+	data := url.Values{
+		"comment": {"The Subway at the Reitz Union is alright but could be better."},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/postComment", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "The Subway at the Reitz Union is alright but could be better."
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+
 }
