@@ -16,6 +16,9 @@ The function checks to make sure the login attempt goes through successfully the
 the user is not logged in.
 ### TestComment
 Sends a POST request containing a comment a fictional user made and checks to make sure that the comment is inserted into the database correctly.
+### TestRegister
+Creates a made up username created using a randomizer function. This user is sent to the server using a POST request and then this
+test also checks to make sure this new user can be properly logged in.
   
 # Backend API
 

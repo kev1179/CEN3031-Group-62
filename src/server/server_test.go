@@ -3,10 +3,26 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"testing"
+	"time"
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
+// SOURCE: https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-go
+func randomString(n int) string {
+	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
+}
 
 // Hello world test
 func TestHelloWorld(t *testing.T) {
@@ -121,4 +137,45 @@ func TestComment(t *testing.T) {
 		t.Errorf("got %q, wanted %q", got, want)
 	}
 
+}
+
+func TestRegister(t *testing.T) {
+
+	username := randomString(10)
+	//User to be registered
+	data := url.Values{
+		"fname":    {"Joe"},
+		"lname":    {"Random"},
+		"username": {username},
+		"password": {"12345678!#"},
+		"email":    {"test@test.com"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/register", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//Unsuccessful login attempt
+	data = url.Values{
+		"username": {username},
+		"password": {"12345678!#"},
+	}
+
+	resp, err = http.PostForm("http://localhost:8080/login", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "true"
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
 }
