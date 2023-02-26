@@ -1,4 +1,9 @@
 # Work Completed in Sprint 2
+### Frontend
+
+### Backend
+* Created system for user comments
+* Implemented session cookie authentication for logged-in users
 
 # Frontend Unit Tests and Cypress Tests
 
