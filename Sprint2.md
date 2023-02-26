@@ -4,6 +4,8 @@
 ### Backend
 * Created system for user comments
 * Implemented session cookie authentication for logged-in users
+* Modified login and register functions for allowing cookie generation and making them more sophisticated
+* Included UUIDs (Universal Unique Identifiers) for session tokens to increase security
 
 # Frontend Unit Tests and Cypress Tests
 
