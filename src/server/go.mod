@@ -5,6 +5,12 @@ go 1.19
 require gorm.io/driver/mysql v1.4.5
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+require (
 	github.com/cosmtrek/air v1.41.0 // indirect
 	github.com/creack/pty v1.1.18 // indirect
 	github.com/fatih/color v1.14.1 // indirect
@@ -18,6 +24,7 @@ require (
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
+	github.com/stretchr/testify v1.8.2
 	golang.org/x/sys v0.4.0 // indirect
 	gorm.io/driver/sqlite v1.4.4 // indirect
 	gorm.io/gorm v1.24.3 // indirect
