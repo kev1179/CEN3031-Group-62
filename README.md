@@ -3,12 +3,12 @@
 ## Group Members
 
 Front-End Developers:
-- Audrey Weigel
-- Patrick Quinlan
+- Audrey Weigel (audreyweigel)
+- Patrick Quinlan (patrickq2)
 
 Back-End Developers:
-- Kevin Mosley
-- Marcos Vazquez
+- Kevin Mosley (kev1179)
+- Marcos Vazquez (marquitos150)
 
 ## Bang For Your Buck
 
