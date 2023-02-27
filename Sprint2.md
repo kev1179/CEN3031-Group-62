@@ -1,4 +1,11 @@
 # Work Completed in Sprint 2
+### Frontend
+
+### Backend
+* Created system for user comments
+* Implemented session cookie authentication for logged-in users
+* Modified login and register functions for allowing cookie generation and making them more sophisticated
+* Included UUIDs (Universal Unique Identifiers) for session tokens to increase security
 
 # Frontend Unit Tests and Cypress Tests
 
@@ -17,9 +24,18 @@ the user is not logged in.
 ### TestComment
 Sends a POST request containing a comment a fictional user made and checks to make sure that the comment is inserted into the database correctly.
 ### TestRegister
+<<<<<<< HEAD
 Creates a made up username created using a randomizer function. This user is sent to the server using a POST request and then this
 test also checks to make sure this new user can be properly logged in.
   
+=======
+Sends a POST request containing sample data of the user's first and last names, username, password, and email to our URL for handling register requests. It then sends another POST request containing the registered user's username and password to make sure the login attempt for that new user was successful. Finally, it performs the same action for a different user, but with the same username already contained in our database, and checks to make sure that the user could not register. This, of course, would be followed by a login attempt for that user, which would not be successful.
+### TestCookie
+Creates a cookie to place in the recorder, which gets copied to a new HTTP request. The cookie then gets extracted from the request, and the function checks if the cookie can be read while also comparing the extracted cookie's value to the value assigned from the session token.
+### TestExpires
+Creates a time variable that is before the current time and a session that contains the time variable to make sure that the user session is already expired.
+
+>>>>>>> origin/master
 # Backend API
 
 ### http://localhost:8080
