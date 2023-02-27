@@ -10,6 +10,7 @@ import { UserLoginComponent } from './login/user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration/user-registration.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserAnimationsModule,
     MatSliderModule,
     NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
