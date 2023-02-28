@@ -1,35 +1,144 @@
-/* Custom default button */
-.btn-light,
-.btn-light:hover,
-.btn-light:focus {
-  color: #333;
-  text-shadow: none; 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  width: 100%;
+  line-height: 1.4;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url(https://prod.wp.cdn.aws.wfu.edu/sites/22/2020/04/iStock-854725402.blog_.jpg) no-repeat center/cover;
 }
 
-.cover-container {
-  max-width: 42em;
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.nav-masthead .nav-link {
-  color: rgba(255, 255, 255, .5);
-  border-bottom: .25rem solid transparent;
-}
-
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, .25);
-}
-
-.nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
-}
-
-.nav-masthead .active {
+h1.title {
   color: #fff;
-  border-bottom-color: #fff;
+  font-size: 4rem;
+}
+
+h1.title span {
+  color: goldenrod;
+  letter-spacing: 1px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.25rem 0.5rem;
+}
+
+p.subtitle {
+  color: #fff;
+  letter-spacing: 1px;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  font-style: italic;
+  text-align: center;
+}
+
+i {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 2rem 0;
+  animation: arrow 1s infinite;
+}
+
+form {
+  width: 50%;
+  height: 75px;
+  background: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="email"] {
+  width: 70%;
+  height: 40px;
+  padding: 1rem;
+  outline: none;
+  border: none;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  border-radius: 10px 0 0 10px;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  width: 20%;
+  height: 40px;
+  background: goldenrod;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  transition: background 0.4s;
+  border-radius: 0 10px 10px 0;
+}
+
+.btn:hover {
+  background: #ffcd4f;
+}
+
+@keyframes arrow {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(4px);
+  }
+  40% {
+    transform: translateY(8px);
+  }
+  60% {
+    transform: translateY(8px);
+  }
+  80% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 750px) {
+    .container{
+        padding: 0 0.25rem;
+    }
+  h1.title {
+    text-align: center;
+    font-size: 3rem;
+  }
+  h1.title span {
+    display: block;
+  }
+
+  p.subtitle{
+      font-size: 1.5rem;
+  }
+
+  form{
+      width: 98%;
+  }
+
+  .btn{
+      font-size: 0.9rem;
+      font-weight: normal;
+      padding: 0 1rem;
+      width: 25%;
+  }
+
+ input[type="email"]{
+      font-size: 0.75rem;
+      width:70%
+  }
 }
