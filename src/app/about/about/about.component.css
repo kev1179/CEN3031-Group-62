@@ -1,3 +1,4 @@
+/* Custom default button */
 .btn-light,
 .btn-light:hover,
 .btn-light:focus {
@@ -32,4 +33,3 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
-
