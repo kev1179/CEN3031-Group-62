@@ -51,11 +51,34 @@
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(155, 2, 2, 0.966) !important;
     display: flex;
     padding: 0 16px;
     align-items: center;
     height: 56px;
+    font: 500 18px/30px Arial, Helvetica, sans-serif;
+    border: 1px solid white;
+    border-radius: 4px;
+  }
+
+  .navbar-nav {
+    margin-left: auto;
+  } 
+
+  .nav-item {
+    border-right: 1px solid white;
+    padding-right: 16px;
+    margin-right: 16px;
+  }
+  
+  .nav-item:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .navbar a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
     font: 500 18px/30px Arial, Helvetica, sans-serif;
   }

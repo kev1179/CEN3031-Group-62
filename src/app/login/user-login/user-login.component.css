@@ -1,11 +1,13 @@
 .outer {
     height: 100vh;
-    background: rgb(206, 194, 194);
+    background: linear-gradient(rgba(213, 85, 85, 0.5), rgba(0, 0, 0, 0.6)),
+    url(https://assets.bonappetit.com/photos/63a390eda38261d1c3bdc555/4:5/w_1920,h_2400,c_limit/best-food-writing-2022-lede.jpg) no-repeat center/cover;
 }
 
 .panel-heading {
     text-align: center;
     margin-bottom: 10px;
+    color: #dd0000;
 }
 
 a:hover {
@@ -21,13 +23,20 @@ a:hover {
 .btn{
     margin-top: 20px;
     border-radius: 15px;
+    background-color: #dd0000;
+    border-color:white;
 }
 
 .panel {
     min-height: 380px;
-  
     border-radius: 12px;
-    margin-top: 100px;
+    margin: 100px auto;
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    margin-top: 150px;
+    margin-left: 230px; 
 }
 
 .input-field {
@@ -37,7 +46,7 @@ a:hover {
     align-items: center;
     cursor: pointer;
     border: 1px solid #ddd;
-    color: #4343ff;
+    color: rgba(213, 85, 85, 0.5);
 }
 
 .input-field.error {
@@ -73,4 +82,9 @@ img {
     object-fit: cover;
     border-radius: 50%;
     position: relative;
+}
+
+a#forget {
+    color: #dd0000;
+    margin-left: 10px;
 }
