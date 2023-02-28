@@ -24,6 +24,7 @@ body {
     text-align: center;
     text-underline-offset: 0.1rem;
     font-style: italic;
+    text-decoration: none;
     background: rgb(170, 23, 23);
 }
 
