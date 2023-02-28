@@ -22,12 +22,11 @@ export class UserLoginComponent {
   Login() {
     if(this.loginForm.valid) {
       //sends user data to database
-      console.log(this.loginForm.value)
+      console.log(this.loginForm.value);
     } else {
       //throws error
-      console.log("Username or Password is incorrect");
       this.validateForm(this.loginForm);
-      alert("invalid form");
+      alert("Username or password is incorrect");
     }
   }
 

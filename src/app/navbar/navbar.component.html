@@ -1,11 +1,34 @@
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+<!-- <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
-      <div>
         <nav class="nav nav-masthead justify-content-center float-md-end">
           <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="about">About Us</a>
           <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="login">Login/Registration</a>
           <a class="nav-link fw-bold py-1 px-0" href="#">Find a Restaurant</a>
           <a class="nav-link fw-bold py-1 px-0" href="#">Log a Review</a>
         </nav>
-      </div>
     </header>
+</div> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="./about">Bang For Your Buck</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="./about">About Us<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="./login">Login/Registration<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Find a Restaurant<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Log a Review<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
