@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-login',
@@ -11,7 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class UserLoginComponent {
   loginForm!: FormGroup;
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -24,6 +25,16 @@ export class UserLoginComponent {
     if(this.loginForm.valid) {
       //sends user data to database
       console.log(this.loginForm.value);
+      this.auth.login(this.loginForm.value)
+      .subscribe({
+        next:(res)=>{
+          alert(res.message);
+          this.loginForm.reset();
+        },
+        error:(err)=>{
+          alert(err?.error.message)
+        }
+      })
     } else {
       //throws error
       this.validateForm(this.loginForm);
