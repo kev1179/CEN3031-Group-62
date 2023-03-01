@@ -61,5 +61,3 @@ Creates a session token to track the User's activity during the status.
 Renews the session token every 2 minutes. This is for security purposes.
 ### http://localhost:8080/logout
 Logs user out of the session. Deletes the session token.
-
-
