@@ -1,35 +1,108 @@
-/* Custom default button */
-.btn-light,
-.btn-light:hover,
-.btn-light:focus {
-  color: #333;
-  text-shadow: none; 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  width: 100%;
+  line-height: 1.4;
+  background: linear-gradient(rgba(213, 85, 85, 0.5), rgba(0, 0, 0, 0.6)),
+    url(https://prod.wp.cdn.aws.wfu.edu/sites/22/2020/04/iStock-854725402.blog_.jpg) no-repeat center/cover;
 }
 
-.cover-container {
-  max-width: 42em;
+.button {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 20%;
+    height: 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #fff;
+    border-radius: 0 10px 10px 0;
+    text-align: center;
+    text-underline-offset: 0.1rem;
+    font-style: italic;
+    text-decoration: none;
+    background: rgb(170, 23, 23);
 }
 
-.nav-masthead .nav-link {
-  color: rgba(255, 255, 255, .5);
-  border-bottom: .25rem solid transparent;
+.button:hover {
+  background: rgba(221, 11, 11, 0.5);
 }
 
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, .25);
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
-}
-
-.nav-masthead .active {
+h1.title {
   color: #fff;
-  border-bottom-color: #fff;
+  font-size: 4rem;
+  font-weight: 700;
+  background-color: rgba(221, 11, 11, 0.5);
+  padding: 0.5rem 1rem;
+}
+
+h1.title span {
+  color: goldenrod;
+  letter-spacing: 1px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.25rem 0.5rem;
+}
+
+p.subtitle {
+  color: #fff;
+  letter-spacing: 1px;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  font-style: normal;
+  text-align: center;
+}
+
+i {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 2rem 0;
+  animation: arrow 1s infinite;
+}
+
+form {
+  width: 50%;
+  height: 75px;
+  background: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 750px) {
+    .container{
+        padding: 0 0.25rem;
+    }
+  h1.title {
+    text-align: center;
+    font-size: 3rem;
+  }
+  h1.title span {
+    display: block;
+  }
+
+  p.subtitle{
+      font-size: 1.5rem;
+  }
+
+  .btn{
+      font-size: 0.9rem;
+      font-weight: normal;
+      padding: 0 1rem;
+      width: 25%;
+  }
 }

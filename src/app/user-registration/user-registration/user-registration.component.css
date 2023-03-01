@@ -1,11 +1,15 @@
 .outer {
     height: 100vh;
-    background: rgb(206, 194, 194);
+    background: linear-gradient(rgba(213, 85, 85, 0.5), rgba(0, 0, 0, 0.6)),
+    url(https://storypowered.com/wp-content/uploads/2018/04/MezzePlatters-copy.gif) no-repeat center/cover;
+    background-size: 114%;
+    background-position: right;
 }
 
 .panel-heading {
     text-align: center;
     margin-bottom: 10px;
+    color: #dd0000;
 }
 
 a:hover {
@@ -21,13 +25,20 @@ a:hover {
 .btn{
     margin-top: 20px;
     border-radius: 15px;
+    background-color: #dd0000;
+    border-color:white;
 }
 
 .panel {
     min-height: 380px;
-  
     border-radius: 12px;
-    margin-top: 100px;
+    margin: 100px auto;
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    margin-top: 115px;
+    margin-left: 230px; 
 }
 
 .input-field {
@@ -37,7 +48,7 @@ a:hover {
     align-items: center;
     cursor: pointer;
     border: 1px solid #ddd;
-    color: #4343ff;
+    color: rgba(213, 85, 85, 0.5);
 }
 
 .input-field.error {
@@ -57,6 +68,8 @@ input[type='password'] {
     border: none;
     outline: none;
     box-shadow: none;
+    background-color: rgb(224, 39, 39, 0.5);
+    color: #dd0000;
 }
 
 img {
@@ -72,4 +85,9 @@ img {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgb(224, 39, 39, 0.5);
+}
+
+a#forget {
+    color: #dd0000;
+    margin-left: 10px;
 }
