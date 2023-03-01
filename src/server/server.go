@@ -49,6 +49,9 @@ func (s Session) isExpired() bool {
 
 // Registers a new user into the database.
 func registerHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
@@ -76,6 +79,9 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 // Determines if a login attempt was successful.
 func loginHandler(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
@@ -135,12 +141,16 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 // Sample get request for front-end team to try
 func getRequestTest(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	fmt.Fprintf(w, "Hello :)")
 
 }
 
 // Puts a comment into the database when user creates a comment.
 func commentHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
@@ -163,6 +173,8 @@ func commentHandler(w http.ResponseWriter, r *http.Request) {
 
 // Test to make sure GO server is working properly
 func helloHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	if r.URL.Path != "/hello" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
 		return
@@ -179,6 +191,8 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 // SOURCE: https://www.sohamkamani.com/golang/session-cookie-authentication/
 func welcomeHandler(w http.ResponseWriter, r *http.Request) {
 	// We can obtain the session token from the requests cookies, which come with every request
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	c, err := r.Cookie("session_token")
 	if err != nil {
 		if err == http.ErrNoCookie {
@@ -213,6 +227,8 @@ func welcomeHandler(w http.ResponseWriter, r *http.Request) {
 
 func refreshHandler(w http.ResponseWriter, r *http.Request) {
 	// (BEGIN) The code from this point is the same as the first part of the `Welcome` route
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	c, err := r.Cookie("session_token")
 	if err != nil {
 		if err == http.ErrNoCookie {
@@ -258,6 +274,8 @@ func refreshHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	c, err := r.Cookie("session_token")
 	if err != nil {
 		if err == http.ErrNoCookie {
