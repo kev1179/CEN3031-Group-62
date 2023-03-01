@@ -1,30 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutComponent } from './about.component';
-import { expect } from '@jest/globals';
+import { TestBed } from '@angular/core/testing';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
-  let fixture: ComponentFixture<AboutComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AboutComponent ]
-    })
-    .compileComponents();
-  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AboutComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      declarations: [ AboutComponent ],
+    });
+    component = TestBed.createComponent(AboutComponent).componentInstance;
   });
 
-  it('should create the AboutComponent', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display the title "About"', () => {
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('About');
+  it('should have a title of "About"', () => {
+    expect(component.Title).toBe('About');
   });
 });

@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserRegistrationComponent } from './user-registration.component';
-import { expect } from '@jest/globals';
 
 describe('UserRegistrationComponent', () => {
   let component: UserRegistrationComponent;

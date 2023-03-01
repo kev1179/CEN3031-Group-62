@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,9 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     UserLoginComponent,
     UserRegistrationComponent,
-    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,8 +25,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatSliderModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
   ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })

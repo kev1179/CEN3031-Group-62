@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserLoginComponent } from './user-login.component';
-import { expect } from '@jest/globals';
 
 describe('UserLoginComponent', () => {
   let component: UserLoginComponent;
@@ -42,4 +41,4 @@ describe('UserLoginComponent', () => {
     component.Login();
     expect(component.loginForm.valid).toBeTruthy();
   });
-});
+}); 
