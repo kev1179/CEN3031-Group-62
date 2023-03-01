@@ -11,7 +11,12 @@
 * Modified login and register functions for allowing cookie generation and making them more sophisticated
 * Included UUIDs (Universal Unique Identifiers) for session tokens to increase security
 
-# Frontend Unit Tests and Cypress Tests
+# Frontend Unit Tests
+
+# Cypress Tests
+
+### Login User
+Basic test that fills out information on the login page.
 
 # Backend Unit Tests 
 
