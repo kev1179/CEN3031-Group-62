@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -9,7 +11,7 @@ import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class UserRegistrationComponent {
   registrationForm!: FormGroup;
   
-  constructor(private fb : FormBuilder) { }
+  constructor(private fb : FormBuilder, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -24,7 +26,17 @@ export class UserRegistrationComponent {
   register() {
     if(this.registrationForm.valid) {
       //send info to database
-      console.log(this.registrationForm.value);
+      this.auth.signUp(this.registrationForm.value)
+      .subscribe({
+        next:(res=>{
+          alert(res.message);
+          this.registrationForm.reset();
+          this.router.navigate(['login']);
+        })
+        ,error:(err=>{
+          alert(err?.error.message)
+        })
+      })
     } else {
       this.validateForm(this.registrationForm);
       alert("One or more fields have not been filled out");
