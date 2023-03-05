@@ -88,7 +88,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("POST request successful")
+	//fmt.Println("POST request successful")
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
 
@@ -109,7 +109,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Username not found or password incorrect")
 	} else {
 		if password == user.Password {
-			fmt.Println("Login Successful!")
+			//fmt.Println("Login Successful!")
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
@@ -130,13 +130,9 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Username not found or password incorrect")
 		}
 	}
-
 	if login {
-		fmt.Fprintf(w, "true")
-	} else {
-		fmt.Fprintf(w, "false")
+		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
-	http.Redirect(w, r, "http://localhost:4200/about", 301)
 }
 
 // Sample get request for front-end team to try
