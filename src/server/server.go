@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -40,6 +41,14 @@ type Comment struct {
 	Time     string
 	Message  string
 	Page     string
+}
+
+type Review struct {
+	Username string
+	Time     string
+	Message  string
+	Page     string
+	Stars    float64
 }
 
 // Determines if session has expired
@@ -298,6 +307,31 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func writeReview(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	fmt.Println("POST request successful")
+	reviewMessage := r.FormValue("message")
+	numStars := r.FormValue("stars")
+	currentTime := time.Now()
+	db, err := gorm.Open(sqlite.Open("reviews.db"), &gorm.Config{})
+
+	stars, err := strconv.ParseFloat(numStars, 64)
+	if err != nil {
+		panic("failed to connect database")
+	}
+	//Username should be activeuser making the comment. Page should be supplied by front end when making post request.
+	//Sending this data via JSON would be the best approach.
+	review := Review{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: reviewMessage, Page: "Food", Stars: stars}
+	fmt.Fprintf(w, review.Message)
+	db.Create(&review)
+}
+
 // IGNORE: for unit testing setup
 func add(x, y int) (res int) {
 	return x + y
@@ -315,6 +349,7 @@ func main() {
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/getTest", getRequestTest)
 	http.HandleFunc("/postComment", commentHandler)
+	http.HandleFunc("/writeReview", writeReview)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
