@@ -42,7 +42,7 @@
                   <h3 class="pt-3 font-weight-bold">Sign Up</h3>
               </div>
               <div class="panel-body p-3">
-                 <!--<form [formGroup]="registrationForm">
+                  <form [formGroup]="registrationForm">
                       <div class="form-group pt-3">
                         <div class="input-field" [class.error]="registrationForm.controls['firstName'].dirty && registrationForm.hasError('required', 'firstName')">
                             <input formControlName="firstName" type="text" placeholder="First Name">
@@ -75,7 +75,8 @@
                       <small *ngIf="registrationForm.controls['password'].dirty && registrationForm.hasError('required', 'password')" class="text-danger">*Password is required</small>
                       <button (click)="register()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Login</button>
                       <div class="text-center pt-4 text-muted">Already have an account? <a id="forget" routerLink="/login" >Login</a></div>
-                  </form>-->
+                  </form>
+                  <!--
                   <form target="_self" action="http://localhost:8080/register" method="post">
                     <div class="form-group pt-3">
                         <label for="exampleInputFirstName1" class="form-label">First Name</label>
@@ -100,7 +101,7 @@
                       <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Register</button>
                       <div class="text-center pt-4 text-muted">Already have an account? <a id="forget" routerLink="/login" >Login</a></div>
                 </form>
-
+              -->
               </div>
           </div>
         </div>  
