@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-login',
@@ -12,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserLoginComponent {
   loginForm!: FormGroup;
   
-  constructor(private fb: FormBuilder, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private http : HttpClient) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -24,17 +23,14 @@ export class UserLoginComponent {
   Login() {
     if(this.loginForm.valid) {
       //sends user data to database
-      console.log(this.loginForm.value);
-      this.auth.login(this.loginForm.value)
-      .subscribe({
-        next:(res)=>{
-          alert(res.message);
-          this.loginForm.reset();
-        },
-        error:(err)=>{
-          alert(err?.error.message)
-        }
-      })
+
+      let formObj = this.loginForm.getRawValue();
+      let serializedForm = JSON.stringify(this.loginForm.value);
+      this.http.post('http://localhost:8080/login', this.loginForm.value)
+      .subscribe(
+        data => console.log("success", data),
+        error => console.error("couldn't post because", error)
+      );
     } else {
       //throws error
       this.validateForm(this.loginForm);
