@@ -23,6 +23,10 @@ export class UserLoginComponent {
   Login() {
     if(this.loginForm.valid) {
       //sends user data to database
+<<<<<<< HEAD
+=======
+
+>>>>>>> c774cc6 (fixed login and user registration pages and made post requests using json)
       let formObj = this.loginForm.getRawValue();
       let serializedForm = JSON.stringify(this.loginForm.value);
       this.http.post('http://localhost:8080/login', this.loginForm.value)
