@@ -1,13 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"strconv"
 	"time"
-	"encoding/json"
-	
+
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -29,6 +29,7 @@ type Login struct {
 	Username string
 	Password string
 }
+
 // map stores user sessions
 var sessions = map[string]Session{}
 
@@ -149,6 +150,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Login handled through JSON
 func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -161,12 +163,12 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 
 	//fmt.Println("POST request successful")
 	//Source: https://gist.github.com/tomnomnom/52dfa67c7a8c9643d7ce
-         d := json.NewDecoder(r.Body)
-         loginAttempt := &Login{}
-         err := d.Decode(loginAttempt)
-         if err != nil {
-              http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
+	d := json.NewDecoder(r.Body)
+	loginAttempt := &Login{}
+	err := d.Decode(loginAttempt)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 	userName := loginAttempt.Username
 	password := loginAttempt.Password
 
@@ -212,6 +214,7 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
 }
+
 // Sample get request for front-end team to try
 func getRequestTest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -242,6 +245,26 @@ func commentHandler(w http.ResponseWriter, r *http.Request) {
 	comment := Comment{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: commentMessage, Page: "Food"}
 	fmt.Fprintf(w, comment.Message)
 	db.Create(&comment)
+}
+
+// Sends JSON back to client containing all the comments needed
+// https://stackoverflow.com/questions/41433207/gorm-db-findusers-to-json-with-gin-in-golang
+func getComments(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	db, err := gorm.Open(sqlite.Open("comments.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	commentList := []Comment{}
+	db.Find(&commentList)
+
+	response, _ := json.Marshal(commentList)
+
+	w.Write([]byte(response))
 }
 
 // Test to make sure GO server is working properly
