@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
-
+	"encoding/json"
+	
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -23,6 +25,10 @@ type User struct {
 	Email     string
 }
 
+type Login struct {
+	Username string
+	Password string
+}
 // map stores user sessions
 var sessions = map[string]Session{}
 
@@ -40,6 +46,14 @@ type Comment struct {
 	Time     string
 	Message  string
 	Page     string
+}
+
+type Review struct {
+	Username string
+	Time     string
+	Message  string
+	Page     string
+	Stars    float64
 }
 
 // Determines if session has expired
@@ -88,7 +102,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("POST request successful")
+	//fmt.Println("POST request successful")
 	userName := r.FormValue("username")
 	password := r.FormValue("password")
 
@@ -109,7 +123,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Username not found or password incorrect")
 	} else {
 		if password == user.Password {
-			fmt.Println("Login Successful!")
+			//fmt.Println("Login Successful!")
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
@@ -130,15 +144,74 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Username not found or password incorrect")
 		}
 	}
-
 	if login {
-		fmt.Fprintf(w, "true")
-	} else {
-		fmt.Fprintf(w, "false")
+		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
-	http.Redirect(w, r, "http://localhost:4200/about", 301)
 }
 
+func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	//fmt.Println("POST request successful")
+	//Source: https://gist.github.com/tomnomnom/52dfa67c7a8c9643d7ce
+         d := json.NewDecoder(r.Body)
+         loginAttempt := &Login{}
+         err := d.Decode(loginAttempt)
+         if err != nil {
+              http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	userName := loginAttempt.Username
+	password := loginAttempt.Password
+
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	var user User
+	sessionToken := ""
+	var expiresAt time.Time
+	login := false
+
+	db.Where("Username = ?", userName).First(&user)
+	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Println("Username not found or password incorrect")
+	} else {
+		if password == user.Password {
+			//fmt.Println("Login Successful!")
+			login = true
+			// uuids are super helpful as they're difficult to guess
+			sessionToken = uuid.NewString()
+			expiresAt = time.Now().Add(120 * time.Second)
+
+			sessions[sessionToken] = Session{
+				user:   user,
+				expiry: expiresAt,
+			}
+
+			http.SetCookie(w, &http.Cookie{
+				Name:    "session_token",
+				Value:   sessionToken,
+				Expires: expiresAt,
+			})
+
+		} else {
+			fmt.Println("Username not found or password incorrect")
+		}
+	}
+	if login {
+		http.Redirect(w, r, "http://localhost:4200/about", 301)
+	}
+}
 // Sample get request for front-end team to try
 func getRequestTest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -302,6 +375,31 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func writeReview(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	fmt.Println("POST request successful")
+	reviewMessage := r.FormValue("message")
+	numStars := r.FormValue("stars")
+	currentTime := time.Now()
+	db, err := gorm.Open(sqlite.Open("reviews.db"), &gorm.Config{})
+
+	stars, err := strconv.ParseFloat(numStars, 64)
+	if err != nil {
+		panic("failed to connect database")
+	}
+	//Username should be activeuser making the comment. Page should be supplied by front end when making post request.
+	//Sending this data via JSON would be the best approach.
+	review := Review{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: reviewMessage, Page: "Food", Stars: stars}
+	fmt.Fprintf(w, review.Message)
+	db.Create(&review)
+}
+
 // IGNORE: for unit testing setup
 func add(x, y int) (res int) {
 	return x + y
@@ -319,6 +417,7 @@ func main() {
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/getTest", getRequestTest)
 	http.HandleFunc("/postComment", commentHandler)
+	http.HandleFunc("/writeReview", writeReview)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
