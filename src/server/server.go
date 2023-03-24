@@ -7,8 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	"encoding/json"
-	
+
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -31,9 +30,13 @@ type Login struct {
 	Password string
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> ffce9f6 (Created handler function for handling login request using JSON. Still needs to be tested.)
+=======
+
+>>>>>>> b291e1e (Added a function called getComments which sends a JSON response back to the client containing user comments.)
 // map stores user sessions
 var sessions = map[string]Session{}
 
@@ -279,6 +282,7 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Login handled through JSON
 func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -291,12 +295,12 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 
 	//fmt.Println("POST request successful")
 	//Source: https://gist.github.com/tomnomnom/52dfa67c7a8c9643d7ce
-         d := json.NewDecoder(r.Body)
-         loginAttempt := &Login{}
-         err := d.Decode(loginAttempt)
-         if err != nil {
-              http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
+	d := json.NewDecoder(r.Body)
+	loginAttempt := &Login{}
+	err := d.Decode(loginAttempt)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 	userName := loginAttempt.Username
 	password := loginAttempt.Password
 
@@ -342,6 +346,7 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
 }
+
 // Sample get request for front-end team to try
 func getRequestTest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
