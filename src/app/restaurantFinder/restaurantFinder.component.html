@@ -4,6 +4,7 @@
     <label for="searchTerm">Search Term:</label>
     <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
 
+<<<<<<< HEAD
     <label for="priceRange">Price Range:</label>
     <select name="priceRange" [ngModel]="priceRange">
       <option value="1">$</option>
@@ -11,6 +12,35 @@
       <option value="3">$$$</option>
       <option value="4">$$$$</option>
     </select>
+=======
+<form>
+  <label for="searchTerm">Search Term:</label>
+<<<<<<< HEAD
+  <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
+
+  <label for="priceRange">Price Range:</label>
+  <select name="priceRange" [ngModel]="priceRange">
+=======
+  <input type="text" id="searchTerm" [(ngModel)]="searchTerm">
+
+  <label for="priceRange">Price Range:</label>
+  <select id="priceRange" [(ngModel)]="priceRange">
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+    <option value="1">$</option>
+    <option value="2">$$</option>
+    <option value="3">$$$</option>
+    <option value="4">$$$$</option>
+  </select>
+
+<<<<<<< HEAD
+  <button type="button" (click)="submit()">Search</button>
+</form>
+<ul>
+  <li *ngFor="let restaurants of restaurants">
+    {{ restaurants.name }} - {{ restaurants.address }} - {{ restaurants.price }}
+  </li>
+</ul>
+>>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
 
     <button type="button" (click)="submit()">Search</button>
   </form>
@@ -74,6 +104,7 @@
 </div>
 -->
 =======
+<<<<<<< HEAD
 <h1>Find Nearby Restaurants</h1>
 
 <form>
@@ -88,6 +119,8 @@
     <option value="4">$$$$</option>
   </select>
 
+=======
+>>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
   <button type="button" (click)="getNearbyRestaurants()">Search</button>
 </form>
 

@@ -15,12 +15,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
 =======
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
 =======
 import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
 >>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
+=======
+import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
 
 @NgModule({
   declarations: [
