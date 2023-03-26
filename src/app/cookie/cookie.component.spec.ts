@@ -43,4 +43,4 @@ import { CookieComponent } from './cookie.component';
   
       expect(component.response).toEqual(responseBody);
     });
-  });
+  }); 
