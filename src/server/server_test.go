@@ -307,25 +307,46 @@ func TestWriteReview(t *testing.T) {
 	}
 }
 
+<<<<<<< HEAD
 func TestWelcomeHandler(t *testing.T) {
+=======
+func TestWelcomeRefreshLogoutHandlers(t *testing.T) {
+>>>>>>> 5e86b9d (Fixed issue with login and register unit testing not working and added a few additional tests like testWriteReview. Currently working on welcome, refresh, and logout handler unit tests.)
 	data := url.Values{
 		"username": {"1234"},
 		"password": {"1234"},
 	}
 
+<<<<<<< HEAD
 	resp, err := http.PostForm("http://localhost:8080/login", data)
+=======
+	resp, err := http.PostForm("http://localhost:8080/logintest", data)
+>>>>>>> 5e86b9d (Fixed issue with login and register unit testing not working and added a few additional tests like testWriteReview. Currently working on welcome, refresh, and logout handler unit tests.)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer resp.Body.Close()
+<<<<<<< HEAD
 
 	if resp.StatusCode != http.StatusNotFound {
 		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
 	}
 	// this is still in the works
 	resp, err = http.Get("http://localhost:8080/about")
+=======
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "true"
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+	// this is still in the works
+	resp, err = http.Get("http://localhost:8080/welcome")
+>>>>>>> 5e86b9d (Fixed issue with login and register unit testing not working and added a few additional tests like testWriteReview. Currently working on welcome, refresh, and logout handler unit tests.)
 
 	if err != nil {
 		log.Fatalln(err)
