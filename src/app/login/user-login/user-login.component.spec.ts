@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+<<<<<<< HEAD
+=======
+import { AuthService } from 'src/app/services/auth.service';
+>>>>>>> 06ca4f0 (Saved changes)
 import { UserLoginComponent } from './user-login.component';
 
 describe('UserLoginComponent', () => {
@@ -10,8 +14,14 @@ describe('UserLoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ UserLoginComponent ],
+<<<<<<< HEAD
       imports: [ ReactiveFormsModule, HttpClientTestingModule ]
         })
+=======
+      imports: [ ReactiveFormsModule, HttpClientTestingModule ],
+      providers: [ AuthService ]
+    })
+>>>>>>> 06ca4f0 (Saved changes)
     .compileComponents();
   });
 
@@ -41,7 +51,10 @@ describe('UserLoginComponent', () => {
       username: 'john',
       password: 'password'
     });
+<<<<<<< HEAD
     /*
+=======
+>>>>>>> 06ca4f0 (Saved changes)
     expect(component.loginForm.valid).toBeTruthy();
     spyOn(component.auth, 'login').and.callThrough();
     spyOn(window, 'alert');
@@ -52,6 +65,10 @@ describe('UserLoginComponent', () => {
     });
     expect(window.alert).toHaveBeenCalledWith('success message from server');
   });
+<<<<<<< HEAD
   */
 })
 })
+=======
+});
+>>>>>>> 06ca4f0 (Saved changes)
