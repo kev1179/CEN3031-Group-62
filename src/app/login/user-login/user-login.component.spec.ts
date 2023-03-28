@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -12,6 +13,13 @@ import { AuthService } from 'src/app/services/auth.service';
 =======
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 >>>>>>> 53b8f63 (fixed majority of tests from last sprint)
+=======
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+=======
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from 'src/app/services/auth.service';
+>>>>>>> 06ca4f0 (Saved changes)
+>>>>>>> 159ed80 (Saved changes)
 import { UserLoginComponent } from './user-login.component';
 
 describe('UserLoginComponent', () => {
@@ -24,12 +32,20 @@ describe('UserLoginComponent', () => {
       declarations: [ UserLoginComponent ],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       imports: [ ReactiveFormsModule, HttpClientTestingModule ]
 <<<<<<< HEAD
         })
 =======
       imports: [ ReactiveFormsModule, HttpClientTestingModule ],
       providers: [ AuthService ]
+=======
+      imports: [ ReactiveFormsModule, HttpClientTestingModule ]
+=======
+      imports: [ ReactiveFormsModule, HttpClientTestingModule ],
+      providers: [ AuthService ]
+>>>>>>> 06ca4f0 (Saved changes)
+>>>>>>> 159ed80 (Saved changes)
     })
 >>>>>>> 06ca4f0 (Saved changes)
 =======
@@ -49,10 +65,13 @@ describe('UserLoginComponent', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
+<<<<<<< HEAD
   afterEach(() => {
     httpTestingController.verify();
   });
 
+=======
+>>>>>>> 06ca4f0 (Saved changes)
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -68,7 +87,11 @@ describe('UserLoginComponent', () => {
     expect(window.alert).toHaveBeenCalledWith('Username or password is incorrect');
   });
 
+<<<<<<< HEAD
   /* it('should submit valid form', () => {
+=======
+  it('should submit valid form', () => {
+>>>>>>> 06ca4f0 (Saved changes)
     component.loginForm.setValue({
       username: 'john',
       password: 'password'
@@ -85,6 +108,7 @@ describe('UserLoginComponent', () => {
 =======
 >>>>>>> 53b8f63 (fixed majority of tests from last sprint)
     expect(component.loginForm.valid).toBeTruthy();
+<<<<<<< HEAD
     spyOn(component, 'Login').and.callThrough();
     spyOn(window, 'alert');
     component.Login();
@@ -111,4 +135,19 @@ describe('UserLoginComponent', () => {
 =======
   }); */
 });
+<<<<<<< HEAD
 >>>>>>> 53b8f63 (fixed majority of tests from last sprint)
+=======
+=======
+    spyOn(component.auth, 'login').and.callThrough();
+    spyOn(window, 'alert');
+    component.Login();
+    expect(component.auth.login).toHaveBeenCalledWith({
+      username: 'john',
+      password: 'password'
+    });
+    expect(window.alert).toHaveBeenCalledWith('success message from server');
+  });
+});
+>>>>>>> 06ca4f0 (Saved changes)
+>>>>>>> 159ed80 (Saved changes)

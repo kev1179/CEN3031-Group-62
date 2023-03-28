@@ -56,5 +56,10 @@ describe('UserRegistrationComponent', () => {
     });
     component.register();
     expect(console.log).toHaveBeenCalledWith(component.registrationForm.value);
+<<<<<<< HEAD
   }); */
 }); 
+=======
+  });
+}); 
+>>>>>>> 06ca4f0 (Saved changes)
