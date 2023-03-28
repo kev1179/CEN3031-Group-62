@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /*import { Component } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -9,6 +10,11 @@ import { Component, NgModule } from '@angular/core';
 import axios from 'axios';
 import { FormsModule } from '@angular/forms';
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+=======
+import { Component, OnInit} from '@angular/core';
+import axios from 'axios';
+import {FormsModule} from '@angular/forms';
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
 
 interface YelpBusiness {
   name: string;
@@ -26,9 +32,13 @@ interface Restaurant {
   name: string;
   address: string;
 <<<<<<< HEAD
+<<<<<<< HEAD
   price: string
 =======
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+=======
+  price: string
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
 }
 
 type CustomHeaders = {
@@ -42,6 +52,7 @@ type CustomHeaders = {
 })
 
 export class RestaurantFinderComponent {
+<<<<<<< HEAD
 <<<<<<< HEAD
     restaurants: any
     latitude: number = 0;
@@ -79,6 +90,10 @@ export class RestaurantFinderComponent {
       const response = await axios.get<YelpResponse>(url, { headers });
       return response.data.businesses.map((business: { name: any; location: { address1: any; }; price: any; }) => ({
 =======
+=======
+    private configUrl: string = "https://corsanywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=boston&term=steak";
+
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
     restaurants: Restaurant[] = [];
     latitude: number = 0;
     longitude: number = 0;
@@ -86,6 +101,9 @@ export class RestaurantFinderComponent {
     priceRange: string = '1';
   
     constructor() {
+    }
+
+    ngOnInit() : void {
       navigator.geolocation.getCurrentPosition(position => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
@@ -94,17 +112,22 @@ export class RestaurantFinderComponent {
         });
       });
     }
-  
+
     async getNearbyRestaurants(): Promise<Restaurant[]> {
-      const url = `https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
+      const url = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
       const headers: CustomHeaders = { 
         Authorization: 'Bearer vJWO-KwXQeqVoBm0VutG9cYKFLXSGjlkvKkoB722hx7p1Be79r-b127NpgjEv7BkkWPUWP3SRo9DbafqHapy3AApGIqsbUQkAzhmqMxSuIZ5twJSuBj9BhsKl80bZHYx',
-        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
+        "x-requested-with": "xmlhttprequest",
         'Accept': 'application/json'
       };
       const response = await axios.get<YelpResponse>(url, { headers });
+<<<<<<< HEAD
       return response.data.businesses.map(business => ({
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+=======
+      return response.data.businesses.map((business: { name: any; location: { address1: any; }; price: any; }) => ({
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
         name: business.name,
         address: business.location.address1,
         price: business.price
@@ -201,6 +224,7 @@ export class RestaurantFinderComponent {
     }
 =======
 }
+<<<<<<< HEAD
 
 @NgModule({
     imports: [FormsModule], 
@@ -209,4 +233,6 @@ export class RestaurantFinderComponent {
 })
 export class RestaurantFinderModule {}
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+=======
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
   

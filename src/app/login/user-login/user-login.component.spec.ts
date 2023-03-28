@@ -2,9 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { AuthService } from 'src/app/services/auth.service';
 >>>>>>> 06ca4f0 (Saved changes)
+=======
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
 import { UserLoginComponent } from './user-login.component';
 
 describe('UserLoginComponent', () => {
@@ -15,6 +18,7 @@ describe('UserLoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ UserLoginComponent ],
 <<<<<<< HEAD
+<<<<<<< HEAD
       imports: [ ReactiveFormsModule, HttpClientTestingModule ]
         })
 =======
@@ -22,6 +26,10 @@ describe('UserLoginComponent', () => {
       providers: [ AuthService ]
     })
 >>>>>>> 06ca4f0 (Saved changes)
+=======
+      imports: [ ReactiveFormsModule, HttpClientTestingModule ]
+        })
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
     .compileComponents();
   });
 
@@ -52,9 +60,13 @@ describe('UserLoginComponent', () => {
       password: 'password'
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
     /*
 =======
 >>>>>>> 06ca4f0 (Saved changes)
+=======
+    /*
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
     expect(component.loginForm.valid).toBeTruthy();
     spyOn(component.auth, 'login').and.callThrough();
     spyOn(window, 'alert');
@@ -66,9 +78,15 @@ describe('UserLoginComponent', () => {
     expect(window.alert).toHaveBeenCalledWith('success message from server');
   });
 <<<<<<< HEAD
+<<<<<<< HEAD
   */
 })
 })
 =======
 });
 >>>>>>> 06ca4f0 (Saved changes)
+=======
+  */
+})
+})
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)

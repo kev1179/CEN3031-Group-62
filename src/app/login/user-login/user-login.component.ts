@@ -24,9 +24,12 @@ export class UserLoginComponent {
     if(this.loginForm.valid) {
       //sends user data to database
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> c774cc6 (fixed login and user registration pages and made post requests using json)
+=======
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
       let formObj = this.loginForm.getRawValue();
       let serializedForm = JSON.stringify(this.loginForm.value);
       this.http.post('http://localhost:8080/login', this.loginForm.value)
