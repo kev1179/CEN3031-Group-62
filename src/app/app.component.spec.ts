@@ -1,4 +1,4 @@
-/*import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -28,4 +28,4 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.title').textContent).toContain('CEN3031-Group-62');
   });
-}); */
+}); 

@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserLoginComponent } from './user-login.component';
 
 describe('UserLoginComponent', () => {
@@ -9,7 +11,8 @@ describe('UserLoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ UserLoginComponent ],
-      imports: [ ReactiveFormsModule ]
+      imports: [ ReactiveFormsModule, HttpClientTestingModule ],
+      providers: [ AuthService ]
     })
     .compileComponents();
   });
@@ -20,25 +23,34 @@ describe('UserLoginComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should validate the form when it is invalid', () => {
+  it('should not submit invalid form', () => {
     component.loginForm.setValue({
       username: '',
       password: ''
     });
-    component.Login();
     expect(component.loginForm.valid).toBeFalsy();
+    spyOn(window, 'alert');
+    component.Login();
+    expect(window.alert).toHaveBeenCalledWith('Username or password is incorrect');
   });
 
-  it('should not validate the form when it is valid', () => {
+  it('should submit valid form', () => {
     component.loginForm.setValue({
-      username: 'test',
+      username: 'john',
       password: 'password'
     });
-    component.Login();
     expect(component.loginForm.valid).toBeTruthy();
+    spyOn(component.auth, 'login').and.callThrough();
+    spyOn(window, 'alert');
+    component.Login();
+    expect(component.auth.login).toHaveBeenCalledWith({
+      username: 'john',
+      password: 'password'
+    });
+    expect(window.alert).toHaveBeenCalledWith('success message from server');
   });
-}); 
+});
