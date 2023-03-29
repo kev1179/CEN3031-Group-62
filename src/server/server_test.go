@@ -307,29 +307,25 @@ func TestWriteReview(t *testing.T) {
 	}
 }
 
-func TestWelcomeRefreshLogoutHandlers(t *testing.T) {
+func TestWelcomeHandler(t *testing.T) {
 	data := url.Values{
 		"username": {"1234"},
 		"password": {"1234"},
 	}
 
-	resp, err := http.PostForm("http://localhost:8080/logintest", data)
+	resp, err := http.PostForm("http://localhost:8080/login", data)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	result := string(body)
-	got := result
-	want := "true"
 
-	if got != want {
-		t.Errorf("got %q, wanted %q", got, want)
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
 	}
 	// this is still in the works
-	resp, err = http.Get("http://localhost:8080/welcome")
+	resp, err = http.Get("http://localhost:8080/about")
 
 	if err != nil {
 		log.Fatalln(err)
