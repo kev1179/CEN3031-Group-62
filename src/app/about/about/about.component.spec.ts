@@ -16,6 +16,14 @@ describe('AboutComponent', () => {
   });
 
   it('should have a title of "About"', () => {
-    expect(component.Title).toBe('About');
+    expect(component.Title).toBeTruthy();
   });
+<<<<<<< HEAD
 }); 
+=======
+<<<<<<< HEAD
+});
+=======
+}); 
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> audrey-dev

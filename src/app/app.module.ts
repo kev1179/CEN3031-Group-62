@@ -13,7 +13,14 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
+<<<<<<< HEAD
 import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+=======
+<<<<<<< HEAD
+import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> audrey-dev
 
 @NgModule({
   declarations: [

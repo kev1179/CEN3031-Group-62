@@ -2,16 +2,55 @@
 
 <form>
   <label for="searchTerm">Search Term:</label>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
+
+  <label for="priceRange">Price Range:</label>
+  <select name="priceRange" [ngModel]="priceRange">
+=======
+>>>>>>> audrey-dev
   <input type="text" id="searchTerm" [(ngModel)]="searchTerm">
 
   <label for="priceRange">Price Range:</label>
   <select id="priceRange" [(ngModel)]="priceRange">
+<<<<<<< HEAD
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> audrey-dev
     <option value="1">$</option>
     <option value="2">$$</option>
     <option value="3">$$$</option>
     <option value="4">$$$$</option>
   </select>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  <button type="button" (click)="submit()">Search</button>
+</form>
+<ul>
+  <li *ngFor="let restaurants of restaurants">
+    {{ restaurants.name }} - {{ restaurants.address }} - {{ restaurants.price }}
+  </li>
+</ul>
+
+<!--
+<div *ngFor="let restaurants of restaurants">
+  <div class="card">
+    <div class="cardContainer">
+      <h1>{{ restaurants.name }}</h1>
+      <p><i> {{ restaurants.location.address1 }} </i></p>
+      <img class="poiPicture" src="{{ restaurants.image_url }}" />
+      <p>Phone Number: {{ restaurants.phone }}</p>
+      <h5>Price: {{restaurants.price}} </h5>
+    </div>
+  </div>
+</div>
+-->
+=======
+>>>>>>> audrey-dev
   <button type="button" (click)="getNearbyRestaurants()">Search</button>
 </form>
 
@@ -20,3 +59,7 @@
     {{ restaurant.name }} - {{ restaurant.address }} - {{ restaurant.price }}
   </li>
 </ul>
+<<<<<<< HEAD
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> audrey-dev
