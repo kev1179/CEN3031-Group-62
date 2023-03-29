@@ -41,12 +41,18 @@
     "@types/jest": "^29.4.0",
     "@types/node": "^18.15.10",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
     "chai": "^4.3.7",
 =======
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
 >>>>>>> audrey-dev
+=======
+    "chai": "^4.3.7",
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> Login-Front
     "cypress": "^12.6.0",
     "jasmine": "^4.6.0",
     "jasmine-core": "^4.5.0",

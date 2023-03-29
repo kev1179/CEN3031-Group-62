@@ -29,7 +29,18 @@ type Login struct {
 	Username string
 	Password string
 }
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> ffce9f6 (Created handler function for handling login request using JSON. Still needs to be tested.)
+=======
+
+>>>>>>> b291e1e (Added a function called getComments which sends a JSON response back to the client containing user comments.)
+>>>>>>> Login-Front
 // map stores user sessions
 var sessions = map[string]Session{}
 
@@ -125,6 +136,137 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		if password == user.Password {
 			fmt.Println("Login Successful!")
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+			login = true
+			// uuids are super helpful as they're difficult to guess
+			sessionToken = uuid.NewString()
+			expiresAt = time.Now().Add(120 * time.Second)
+
+			sessions[sessionToken] = Session{
+				user:   user,
+				expiry: expiresAt,
+			}
+
+			http.SetCookie(w, &http.Cookie{
+				Name:    "session_token",
+				Value:   sessionToken,
+				Expires: expiresAt,
+			})
+
+		} else {
+			fmt.Println("Username not found or password incorrect")
+		}
+	}
+	if login {
+		http.Redirect(w, r, "http://localhost:4200/about", 301)
+	}
+}
+
+// Determines if a login attempt was successful. (used for test in server_test.go)
+func loginTestHandler(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	fmt.Println("POST request successful")
+	userName := r.FormValue("username")
+	password := r.FormValue("password")
+
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	var user User
+	sessionToken := ""
+	var expiresAt time.Time
+	login := false
+
+	db.Where("Username = ?", userName).First(&user)
+	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Println("Username not found or password incorrect")
+	} else {
+		if password == user.Password {
+			fmt.Println("Login Successful!")
+			login = true
+			// uuids are super helpful as they're difficult to guess
+			sessionToken = uuid.NewString()
+			expiresAt = time.Now().Add(120 * time.Second)
+
+			sessions[sessionToken] = Session{
+				user:   user,
+				expiry: expiresAt,
+			}
+
+			http.SetCookie(w, &http.Cookie{
+				Name:    "session_token",
+				Value:   sessionToken,
+				Expires: expiresAt,
+			})
+
+		} else {
+			fmt.Println("Username not found or password incorrect")
+		}
+	}
+	if login {
+		fmt.Fprintf(w, "true")
+	} else {
+		fmt.Fprintf(w, "false")
+	}
+}
+
+// Login handled through JSON
+func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	//fmt.Println("POST request successful")
+	//Source: https://gist.github.com/tomnomnom/52dfa67c7a8c9643d7ce
+	d := json.NewDecoder(r.Body)
+	loginAttempt := &Login{}
+	err := d.Decode(loginAttempt)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	userName := loginAttempt.Username
+	password := loginAttempt.Password
+
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	var user User
+	sessionToken := ""
+	var expiresAt time.Time
+	login := false
+
+	db.Where("Username = ?", userName).First(&user)
+	if err := db.Where("Username = ?", userName).First(&user).Error; err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Println("Username not found or password incorrect")
+	} else {
+		if password == user.Password {
+			//fmt.Println("Login Successful!")
+=======
+>>>>>>> 0fb51df (Added test case for welcome handler to redirect to the about page.)
+>>>>>>> Login-Front
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()

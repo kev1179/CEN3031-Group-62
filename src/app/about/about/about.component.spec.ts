@@ -19,11 +19,17 @@ describe('AboutComponent', () => {
     expect(component.Title).toBeTruthy();
   });
 <<<<<<< HEAD
+<<<<<<< HEAD
 }); 
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> Login-Front
 });
 =======
 }); 
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+<<<<<<< HEAD
 >>>>>>> audrey-dev
+=======
+>>>>>>> Login-Front

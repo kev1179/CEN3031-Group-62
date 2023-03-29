@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { TestBed } from '@angular/core/testing';
 =======
 <<<<<<< HEAD
@@ -7,6 +8,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
 >>>>>>> audrey-dev
+=======
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+=======
+import { TestBed } from '@angular/core/testing';
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> Login-Front
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -47,8 +54,13 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('.title').textContent).toContain('CEN3031-Group-62');
   });
 <<<<<<< HEAD
+<<<<<<< HEAD
 }); 
 =======
 }); 
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
 >>>>>>> audrey-dev
+=======
+}); 
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> Login-Front

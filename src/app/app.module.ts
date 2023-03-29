@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
 =======
 <<<<<<< HEAD
@@ -21,6 +22,21 @@ import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.c
 =======
 >>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
 >>>>>>> audrey-dev
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+=======
+import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+>>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
+=======
+import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+=======
+>>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
+>>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
+>>>>>>> Login-Front
 
 @NgModule({
   declarations: [

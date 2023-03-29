@@ -63,6 +63,10 @@ describe('UserRegistrationComponent', () => {
   });
 }); 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 06ca4f0 (Saved changes)
 >>>>>>> audrey-dev
+=======
+>>>>>>> 06ca4f0 (Saved changes)
+>>>>>>> Login-Front
