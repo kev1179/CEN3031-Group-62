@@ -44,6 +44,9 @@ Creates a cookie to place in the recorder, which gets copied to a new HTTP reque
 Creates a time variable that is before the current time and a session that contains the time variable to make sure that the user session is already expired.
 ### TestWriteReview
 Sends a POST request containing the review written, which includes the message and the star rating, and checks to make sure that the review is inserted into the database correctly.
+### TestWelcomeHandler
+Acts like testlogin, but it makes sure to redirect to the about page of the app.
+
 
 # Backend API
 
