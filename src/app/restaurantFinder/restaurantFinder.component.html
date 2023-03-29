@@ -2,21 +2,34 @@
 
 <form>
   <label for="searchTerm">Search Term:</label>
-  <input type="text" id="searchTerm" [(ngModel)]="searchTerm">
+  <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
 
   <label for="priceRange">Price Range:</label>
-  <select id="priceRange" [(ngModel)]="priceRange">
+  <select name="priceRange" [ngModel]="priceRange">
     <option value="1">$</option>
     <option value="2">$$</option>
     <option value="3">$$$</option>
     <option value="4">$$$$</option>
   </select>
 
-  <button type="button" (click)="getNearbyRestaurants()">Search</button>
+  <button type="button" (click)="submit()">Search</button>
 </form>
-
 <ul>
-  <li *ngFor="let restaurant of restaurants">
-    {{ restaurant.name }} - {{ restaurant.address }} - {{ restaurant.price }}
+  <li *ngFor="let restaurants of restaurants">
+    {{ restaurants.name }} - {{ restaurants.address }} - {{ restaurants.price }}
   </li>
 </ul>
+
+<!--
+<div *ngFor="let restaurants of restaurants">
+  <div class="card">
+    <div class="cardContainer">
+      <h1>{{ restaurants.name }}</h1>
+      <p><i> {{ restaurants.location.address1 }} </i></p>
+      <img class="poiPicture" src="{{ restaurants.image_url }}" />
+      <p>Phone Number: {{ restaurants.phone }}</p>
+      <h5>Price: {{restaurants.price}} </h5>
+    </div>
+  </div>
+</div>
+-->
