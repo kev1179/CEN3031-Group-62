@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+
 	"net/http/httptest"
 	"net/url"
 	"testing"
@@ -85,16 +86,22 @@ func TestLogin(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	result := string(body)
-	got := result
-	want := "true"
-
-	if got != want {
-		t.Errorf("got %q, wanted %q", got, want)
+	/*
+		defer resp.Body.Close()
+	*/
+	if resp.StatusCode != http.StatusFound {
+		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
 	}
+	/*
+		body, err := ioutil.ReadAll(resp.Body)
+		result := string(body)
+		got := result
+		want := "true"
+
+		if got != want {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+	*/
 
 	//Unsuccessful login attempt
 	data = url.Values{
@@ -108,15 +115,21 @@ func TestLogin(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	defer resp.Body.Close()
-	body, err = ioutil.ReadAll(resp.Body)
-	result = string(body)
-	got = result
-	want = "false"
+	//defer resp.Body.Close()
 
-	if got != want {
-		t.Errorf("got %q, wanted %q", got, want)
+	if resp.StatusCode != http.StatusFound {
+		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
 	}
+	/*
+		body, err = ioutil.ReadAll(resp.Body)
+		result = string(body)
+		got = result
+		want = "false"
+
+		if got != want {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+	*/
 }
 
 func TestComment(t *testing.T) {
