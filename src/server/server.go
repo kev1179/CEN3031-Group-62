@@ -132,6 +132,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		if password == user.Password {
 			fmt.Println("Login Successful!")
+<<<<<<< HEAD
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
@@ -257,6 +258,8 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 	} else {
 		if password == user.Password {
 			//fmt.Println("Login Successful!")
+=======
+>>>>>>> 0fb51df (Added test case for welcome handler to redirect to the about page.)
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
