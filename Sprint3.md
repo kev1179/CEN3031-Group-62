@@ -1,10 +1,7 @@
 # Work Completed in Sprint 3 (Updated from Sprint 2)
 ### Frontend
-* Beautified the about, login, and registration page
-* Implemented a navigation bar that can be accessed from any page
-* Connected the login and registration pages to the backend
-* Created a color scheme for the website
-* (NEW): Implemented the Yelp API to show reviews made from restaurants to the user
+* Implemented the Yelp API to allow users to search for local restaurants
+* Fixed failing unit tests from Sprint 2
 
 ### Backend
 * Created system for user comments
@@ -15,6 +12,23 @@
 * (NEW): Created system for writing reviews
 
 # Frontend Unit Tests
+
+### AppComponent
+2 tests: One maked sure the app component is created properly and the second ensures that it has title CEN3031-Group-62.
+### UserRegistrationComponent
+4 Tests: Makes sure the user registration component is created properly, has a valid registration form, throws an alert when registering with an invalid form, and logs the registration form values when registering with a valid form.
+### YelpService
+Test to make sure the yelp service is created properly.
+### RestaurantFinderComponent
+4 Tests: Makes sure the restaurant finder component is created properly, retrieves nearby restaurants when submitting the form, sets latitude and longitude when initializing, and retrieves nearby restaurants from the Yelp API.
+### NavbarComponent
+Test to make sure the navbar component is created properly.
+### UserLoginComponent
+3 Tests: Makes sure the user login component is created properly, does not submit an invalid form, and submits a valid form.
+### CookieComponent
+Test to make sure the cookie component sends a request with the cookie header.
+### AboutComponent
+2 Tests: Makes sure the about component is created properly and has a title of "About".
 
 # Cypress Tests
 
