@@ -4,6 +4,7 @@ import { UserLoginComponent } from './login/user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration/user-registration.component';
 import { AboutComponent } from './about/about/about.component';
 import { RestaurantFinderComponent} from './restaurantFinder/restaurantFinder.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const routes: Routes = [
   {path : '', redirectTo : 'about', pathMatch : 'full'},
