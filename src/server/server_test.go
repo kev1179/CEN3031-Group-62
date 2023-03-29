@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+
 	"net/http/httptest"
 	"net/url"
 	"testing"
@@ -73,20 +74,20 @@ func TestGetRequest(t *testing.T) {
 }
 
 func TestLogin(t *testing.T) {
-
 	//Successful login attempt
 	data := url.Values{
 		"username": {"1234"},
 		"password": {"1234"},
 	}
 
-	resp, err := http.PostForm("http://localhost:8080/login", data)
+	resp, err := http.PostForm("http://localhost:8080/logintest", data)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	result := string(body)
 	got := result
@@ -102,13 +103,14 @@ func TestLogin(t *testing.T) {
 		"password": {"1235"},
 	}
 
-	resp, err = http.PostForm("http://localhost:8080/login", data)
+	resp, err = http.PostForm("http://localhost:8080/logintest", data)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer resp.Body.Close()
+
 	body, err = ioutil.ReadAll(resp.Body)
 	result = string(body)
 	got = result
@@ -167,7 +169,7 @@ func TestRegister(t *testing.T) {
 		"password": {"12345678!#"},
 	}
 
-	resp, err = http.PostForm("http://localhost:8080/login", data)
+	resp, err = http.PostForm("http://localhost:8080/logintest", data)
 
 	if err != nil {
 		log.Fatal(err)
@@ -205,7 +207,7 @@ func TestRegister(t *testing.T) {
 		"password": {"electrical"},
 	}
 
-	resp, err = http.PostForm("http://localhost:8080/login", data)
+	resp, err = http.PostForm("http://localhost:8080/logintest", data)
 
 	if err != nil {
 		log.Fatal(err)
@@ -281,7 +283,55 @@ func TestExpries(t *testing.T) {
 	}
 }
 
-// units test to be made:
-// 1. welcome handler
-// 2. refresh handler
-// 3. logout handler
+// test for writing review
+func TestWriteReview(t *testing.T) {
+	data := url.Values{
+		"stars":   {"2"},
+		"message": {"Food mushy. No flavor."},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/writeReview", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "Food mushy. No flavor."
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+}
+
+func TestWelcomeHandler(t *testing.T) {
+	data := url.Values{
+		"username": {"1234"},
+		"password": {"1234"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/login", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
+	}
+	// this is still in the works
+	resp, err = http.Get("http://localhost:8080/about")
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
+	}
+}

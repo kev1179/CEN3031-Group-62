@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import {HttpClient} from '@angular/common/http'
+import { data } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-user-registration',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserRegistrationComponent {
   registrationForm!: FormGroup;
   
-  constructor(private fb : FormBuilder, private auth: AuthService, private router: Router) { }
+  constructor(private fb : FormBuilder, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -26,17 +27,14 @@ export class UserRegistrationComponent {
   register() {
     if(this.registrationForm.valid) {
       //send info to database
-      this.auth.signUp(this.registrationForm.value)
-      .subscribe({
-        next:(res=>{
-          alert(res.message);
-          this.registrationForm.reset();
-          this.router.navigate(['login']);
-        })
-        ,error:(err=>{
-          alert(err?.error.message)
-        })
-      })
+
+      let formObj = this.registrationForm.getRawValue();
+      let serializedForm = JSON.stringify(this.registrationForm.value);
+
+      this.http.post('http://localhost:8080/register', serializedForm).subscribe(
+        data => console.log("success", data),
+        error => console.error("couldnt post becuase", error)
+      );
     } else {
       this.validateForm(this.registrationForm);
       alert("One or more fields have not been filled out");
