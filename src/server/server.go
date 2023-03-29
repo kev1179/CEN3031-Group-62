@@ -124,7 +124,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Username not found or password incorrect")
 	} else {
 		if password == user.Password {
-			//fmt.Println("Login Successful!")
+			fmt.Println("Login Successful!")
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
