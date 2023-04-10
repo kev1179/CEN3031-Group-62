@@ -1,38 +1,16 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { Component, OnInit} from '@angular/core';
-import axios from 'axios';
-import {FormsModule} from '@angular/forms';
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
+
 
 /*import { Component } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 //import axios from 'axios';
 import { YelpService } from '../services/yelp.service';
-=======
 import { Component, NgModule } from '@angular/core';
 import axios from 'axios';
 import { FormsModule } from '@angular/forms';
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
-<<<<<<< HEAD
->>>>>>> audrey-dev
-=======
-<<<<<<< HEAD
-=======
+
 import { Component, OnInit} from '@angular/core';
 import axios from 'axios';
 import {FormsModule} from '@angular/forms';
->>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
 
 interface YelpBusiness {
   name: string;
@@ -49,30 +27,8 @@ interface YelpResponse {
 interface Restaurant {
   name: string;
   address: string;
-<<<<<<< HEAD
-<<<<<<< HEAD
   price: string
-=======
-<<<<<<< HEAD
-  price: string
-=======
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
->>>>>>> audrey-dev
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-  price: string
-=======
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
-=======
-  price: string
->>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
-=======
-  price: string
-=======
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
+
 }
 
 type CustomHeaders = {
@@ -86,8 +42,6 @@ type CustomHeaders = {
 })
 
 export class RestaurantFinderComponent {
-<<<<<<< HEAD
-<<<<<<< HEAD
     private configUrl: string = "https://corsanywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=boston&term=steak";
 
     restaurants: Restaurant[] = [];
@@ -109,14 +63,6 @@ export class RestaurantFinderComponent {
       });
     }
 
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
     restaurants: any
     latitude: number = 0;
     longitude: number = 0;
@@ -142,7 +88,6 @@ export class RestaurantFinderComponent {
       //});
    // }
 /*
->>>>>>> audrey-dev
     async getNearbyRestaurants(): Promise<Restaurant[]> {
       const url = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
       const headers: CustomHeaders = { 
@@ -153,20 +98,9 @@ export class RestaurantFinderComponent {
       };
       const response = await axios.get<YelpResponse>(url, { headers });
       return response.data.businesses.map((business: { name: any; location: { address1: any; }; price: any; }) => ({
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-=======
-=======
-<<<<<<< HEAD
-=======
+
     private configUrl: string = "https://corsanywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=boston&term=steak";
 
->>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
     restaurants: Restaurant[] = [];
     latitude: number = 0;
     longitude: number = 0;
@@ -174,15 +108,11 @@ export class RestaurantFinderComponent {
     priceRange: string = '1';
   
     constructor() {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+
     }
 
     ngOnInit() : void {
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
+
       navigator.geolocation.getCurrentPosition(position => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
@@ -191,9 +121,6 @@ export class RestaurantFinderComponent {
         });
       });
     }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
     async getNearbyRestaurants(): Promise<Restaurant[]> {
       const url = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
@@ -204,14 +131,10 @@ export class RestaurantFinderComponent {
         'Accept': 'application/json'
       };
       const response = await axios.get<YelpResponse>(url, { headers });
-<<<<<<< HEAD
       return response.data.businesses.map(business => ({
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
-=======
+
       return response.data.businesses.map((business: { name: any; location: { address1: any; }; price: any; }) => ({
->>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
-=======
->>>>>>> Login-Front
+
   
     async getNearbyRestaurants(): Promise<Restaurant[]> {
       const url = `https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
@@ -222,24 +145,14 @@ export class RestaurantFinderComponent {
       };
       const response = await axios.get<YelpResponse>(url, { headers });
       return response.data.businesses.map(business => ({
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
-<<<<<<< HEAD
->>>>>>> audrey-dev
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
         name: business.name,
         address: business.location.address1,
         price: business.price
       }));
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 }
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Login-Front
+
   
     
     getNearbyRestaurants() {
@@ -328,30 +241,6 @@ export class RestaurantFinderComponent {
           });
         }
     }
-=======
-}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
 
-@NgModule({
-    imports: [FormsModule], 
-    declarations: [RestaurantFinderComponent],
-    exports: [RestaurantFinderComponent]
-})
-export class RestaurantFinderModule {}
->>>>>>> bee9748 (yelp api is available @ url /restaurantFinder)
-<<<<<<< HEAD
->>>>>>> audrey-dev
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 561ba67 (fixed cors issue with yelp api by adding proxy.)
-=======
->>>>>>> 81f19d1 (yelp api is available @ url /restaurantFinder)
->>>>>>> Login-Front
+
   
