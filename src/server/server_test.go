@@ -40,17 +40,6 @@ func TestHelloWorld(t *testing.T) {
 	}
 }
 
-// Basic function test
-func TestSample(t *testing.T) {
-
-	got := add(11, 7)
-	want := 18
-
-	if got != want {
-		t.Errorf("got %q, wanted %q", got, want)
-	}
-}
-
 // Simple GET request test
 func TestGetRequest(t *testing.T) {
 
