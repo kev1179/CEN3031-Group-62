@@ -468,6 +468,7 @@ func writeReview(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("POST request successful")
 	reviewMessage := r.FormValue("message")
+	restauraunt := r.FormValue("restauraunt")
 	numStars := r.FormValue("stars")
 	currentTime := time.Now()
 	db, err := gorm.Open(sqlite.Open("reviews.db"), &gorm.Config{})
@@ -478,7 +479,7 @@ func writeReview(w http.ResponseWriter, r *http.Request) {
 	}
 	//Username should be activeuser making the comment. Page should be supplied by front end when making post request.
 	//Sending this data via JSON would be the best approach.
-	review := Review{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: reviewMessage, Restauraunt: "Food", Stars: stars}
+	review := Review{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: reviewMessage, Restauraunt: restauraunt, Stars: stars}
 	fmt.Fprintf(w, review.Message)
 	db.Create(&review)
 }

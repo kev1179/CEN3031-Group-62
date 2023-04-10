@@ -277,6 +277,7 @@ func TestWriteReview(t *testing.T) {
 	data := url.Values{
 		"stars":   {"2"},
 		"message": {"Food mushy. No flavor."},
+		"restauraunt": {"Burger King"},
 	}
 
 	resp, err := http.PostForm("http://localhost:8080/writeReview", data)
@@ -327,8 +328,16 @@ func TestWelcomeHandler(t *testing.T) {
 
 func TestFavorites(t *testing.T) {
 
+	data := url.Values{
+		"stars":   {"5"},
+		"message": {"Excelent Food!"},
+		"restauraunt" : {"Wendys"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/writeReview", data)
+
 	// this is still in the works
-	resp, err := http.Get("http://localhost:8080/getFavoriteRestaurants")
+	resp, err = http.Get("http://localhost:8080/getFavoriteRestaurants")
 
 	if err != nil {
 		log.Fatalln(err)
