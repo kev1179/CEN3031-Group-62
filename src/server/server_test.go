@@ -324,3 +324,24 @@ func TestWelcomeHandler(t *testing.T) {
 		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
 	}
 }
+
+func TestFavorites(t *testing.T) {
+
+	// this is still in the works
+	resp, err := http.Get("http://localhost:8080/getFavoriteRestaurants")
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "Sent!"
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+
+}

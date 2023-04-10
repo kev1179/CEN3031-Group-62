@@ -505,6 +505,7 @@ func getFavoriteRestaurants(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i<len(reviews); i++ {
 		fmt.Println(reviews[i].Restauraunt)
 	}
+	fmt.Fprintf(w, "Sent!")
 }
 
 // Starts server and sets URL's front-end can send requests to
