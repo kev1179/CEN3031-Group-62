@@ -53,7 +53,7 @@ type Review struct {
 	Username string
 	Time     string
 	Message  string
-	Page     string
+	Restauraunt	string
 	Stars    float64
 }
 
@@ -470,6 +470,7 @@ func writeReview(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("POST request successful")
 	reviewMessage := r.FormValue("message")
+	restauraunt := r.FormValue("restauraunt")
 	numStars := r.FormValue("stars")
 	currentTime := time.Now()
 	db, err := gorm.Open(sqlite.Open("reviews.db"), &gorm.Config{})
@@ -480,14 +481,34 @@ func writeReview(w http.ResponseWriter, r *http.Request) {
 	}
 	//Username should be activeuser making the comment. Page should be supplied by front end when making post request.
 	//Sending this data via JSON would be the best approach.
-	review := Review{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: reviewMessage, Page: "Food", Stars: stars}
+	review := Review{Username: "Bob", Time: currentTime.Format("01-02-2006 15:04:05"), Message: reviewMessage, Restauraunt: restauraunt, Stars: stars}
 	fmt.Fprintf(w, review.Message)
 	db.Create(&review)
 }
 
-// IGNORE: for unit testing setup
-func add(x, y int) (res int) {
-	return x + y
+func getFavoriteRestaurants(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	fmt.Println("POST request successful")
+	db, err := gorm.Open(sqlite.Open("reviews.db"), &gorm.Config{})
+
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	var reviews []Review
+	db.Where("stars = ?", "5").First(&reviews)
+	
+	for i := 0; i<len(reviews); i++ {
+		fmt.Println(reviews[i].Restauraunt)
+	}
+	fmt.Fprintf(w, "Sent!")
 }
 
 // Starts server and sets URL's front-end can send requests to
@@ -504,6 +525,7 @@ func main() {
 	http.HandleFunc("/getTest", getRequestTest)
 	http.HandleFunc("/postComment", commentHandler)
 	http.HandleFunc("/writeReview", writeReview)
+	http.HandleFunc("/getFavoriteRestaurants", getFavoriteRestaurants)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
