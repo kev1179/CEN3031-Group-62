@@ -29,18 +29,7 @@ type Login struct {
 	Username string
 	Password string
 }
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> ffce9f6 (Created handler function for handling login request using JSON. Still needs to be tested.)
-=======
-
->>>>>>> b291e1e (Added a function called getComments which sends a JSON response back to the client containing user comments.)
->>>>>>> Login-Front
 // map stores user sessions
 var sessions = map[string]Session{}
 
@@ -136,9 +125,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		if password == user.Password {
 			fmt.Println("Login Successful!")
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
@@ -264,9 +251,7 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 	} else {
 		if password == user.Password {
 			//fmt.Println("Login Successful!")
-=======
->>>>>>> 0fb51df (Added test case for welcome handler to redirect to the about page.)
->>>>>>> Login-Front
+
 			login = true
 			// uuids are super helpful as they're difficult to guess
 			sessionToken = uuid.NewString()
