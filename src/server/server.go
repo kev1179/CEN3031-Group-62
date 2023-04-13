@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 	"os"
+	"strings"
 
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
@@ -533,13 +534,19 @@ func printHelpScreen() {
 func main() {
 
     args := os.Args
+	port := ":8080"
 
 	if len(args) > 1 {
 		if args[1] == "--help" {
 			printHelpScreen()
 			return
 		}
+
+		if args[1] == "start" {
+			tempPort := args[2]
+			port = ":" + tempPort
 	}
+}
 
 	fileServer := http.FileServer(http.Dir("."))
 	http.Handle("/", fileServer)
@@ -555,8 +562,10 @@ func main() {
 	http.HandleFunc("/writeReview", writeReview)
 	http.HandleFunc("/getFavoriteRestaurants", getFavoriteRestaurants)
 
-	fmt.Printf("Starting server at port 8080\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	portString := strings.ReplaceAll(port, ":", "")
+	
+	fmt.Printf("Starting server at port " + portString + "\n")
+	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
 	}
 }
