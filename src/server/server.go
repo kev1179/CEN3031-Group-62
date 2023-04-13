@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+	"os"
 
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
@@ -530,6 +531,16 @@ func printHelpScreen() {
 
 // Starts server and sets URL's front-end can send requests to
 func main() {
+
+    args := os.Args
+
+	if len(args) > 1 {
+		if args[1] == "--help" {
+			printHelpScreen()
+			return
+		}
+	}
+
 	fileServer := http.FileServer(http.Dir("."))
 	http.Handle("/", fileServer)
 	http.HandleFunc("/register", registerHandler)
