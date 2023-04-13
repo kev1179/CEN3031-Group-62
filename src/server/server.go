@@ -509,6 +509,25 @@ func getFavoriteRestaurants(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Sent!")
 }
 
+func printHelpScreen() {
+
+	fmt.Println("Back-End API request handlers:")
+	fmt.Println("All requests are in the form http://localhost:8080/[handler]")
+	fmt.Println("Here are the handlers implemented:")
+	fmt.Println("\n1) register - Registers new user") 
+	fmt.Println("2) login - Sends login request to server")
+	fmt.Println("3) logintest - A login function designed to handle unit tests")
+	fmt.Println("4) hello - A hello request meant to test the functionality of the server")
+	fmt.Println("5) welcome - Generates a cookie")
+	fmt.Println("6) refresh - Refreshes the active cookie")
+	fmt.Println("7) logout - Logs the current user out by getting rid of the current cookie")
+	fmt.Println("8) getTest - Handler meant to test out GET requests")
+	fmt.Println("9) postComment - Sends a user comment to the backend to be placed in a database")
+	fmt.Println("10) writeReview - Sends a user review on a certain restaurant to be sent to the backend to be placed in database")
+	fmt.Println("11) getFavoriteRestaurants - Compiles a list of the most popular restaurants and returns it to front-end")
+
+}
+
 // Starts server and sets URL's front-end can send requests to
 func main() {
 	fileServer := http.FileServer(http.Dir("."))
