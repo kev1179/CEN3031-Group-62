@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
-	"time"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
@@ -52,11 +52,21 @@ type Comment struct {
 }
 
 type Review struct {
-	Username string
-	Time     string
-	Message  string
-	Restauraunt	string
-	Stars    float64
+	Username    string
+	Time        string
+	Message     string
+	Restauraunt string
+	Stars       float64
+}
+
+type Info struct {
+	Age        int64
+	Weight     float64
+	Height     string
+	Gender     string
+	Disorder   bool
+	GlutenFree bool
+	Veggie     bool
 }
 
 // Determines if session has expired
@@ -504,11 +514,45 @@ func getFavoriteRestaurants(w http.ResponseWriter, r *http.Request) {
 
 	var reviews []Review
 	db.Where("stars = ?", "5").First(&reviews)
-	
-	for i := 0; i<len(reviews); i++ {
+
+	for i := 0; i < len(reviews); i++ {
 		fmt.Println(reviews[i].Restauraunt)
 	}
 	fmt.Fprintf(w, "Sent!")
+}
+
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	fmt.Println("POST request successful")
+	age := r.FormValue("age")
+	weight := r.FormValue("weight")
+	heightFeet := r.FormValue("feet")
+	heightInches := r.FormValue("inches")
+	gender := r.FormValue("gender")
+	hasDisorder := r.FormValue("disorder")
+	noGluten := r.FormValue("glutenFree")
+	isVeggie := r.FormValue("veggie")
+	db, err := gorm.Open(sqlite.Open("information.db"), &gorm.Config{})
+
+	myAge, err := strconv.ParseInt(age, 64, 4)
+	myWeight, err := strconv.ParseFloat(weight, 64)
+	disorder, err := strconv.ParseBool(hasDisorder)
+	gluten, err := strconv.ParseBool(noGluten)
+	veggie, err := strconv.ParseBool(isVeggie)
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	information := Info{Age: myAge, Weight: myWeight, Height: heightFeet + "'" + heightInches,
+		Gender: gender, Disorder: disorder, GlutenFree: gluten, Veggie: veggie}
+	db.Create(&information)
 }
 
 func printHelpScreen() {
@@ -516,7 +560,7 @@ func printHelpScreen() {
 	fmt.Println("Back-End API request handlers:")
 	fmt.Println("All requests are in the form http://localhost:8080/[handler]")
 	fmt.Println("Here are the handlers implemented:")
-	fmt.Println("\n1) register - Registers new user") 
+	fmt.Println("\n1) register - Registers new user")
 	fmt.Println("2) login - Sends login request to server")
 	fmt.Println("3) logintest - A login function designed to handle unit tests")
 	fmt.Println("4) hello - A hello request meant to test the functionality of the server")
@@ -527,13 +571,13 @@ func printHelpScreen() {
 	fmt.Println("9) postComment - Sends a user comment to the backend to be placed in a database")
 	fmt.Println("10) writeReview - Sends a user review on a certain restaurant to be sent to the backend to be placed in database")
 	fmt.Println("11) getFavoriteRestaurants - Compiles a list of the most popular restaurants and returns it to front-end")
-
+	fmt.Println("12) inputInfo - Collects data from the user about their dietary info and gets sent to the backend for placing in database")
 }
 
 // Starts server and sets URL's front-end can send requests to
 func main() {
 
-    args := os.Args
+	args := os.Args
 	port := ":8080"
 
 	if len(args) > 1 {
@@ -545,8 +589,8 @@ func main() {
 		if args[1] == "start" {
 			tempPort := args[2]
 			port = ":" + tempPort
+		}
 	}
-}
 
 	fileServer := http.FileServer(http.Dir("."))
 	http.Handle("/", fileServer)
@@ -561,9 +605,10 @@ func main() {
 	http.HandleFunc("/postComment", commentHandler)
 	http.HandleFunc("/writeReview", writeReview)
 	http.HandleFunc("/getFavoriteRestaurants", getFavoriteRestaurants)
+	http.HandleFunc("/inputInfo", infoHandler)
 
 	portString := strings.ReplaceAll(port, ":", "")
-	
+
 	fmt.Printf("Starting server at port " + portString + "\n")
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
