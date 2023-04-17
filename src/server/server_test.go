@@ -40,17 +40,6 @@ func TestHelloWorld(t *testing.T) {
 	}
 }
 
-// Basic function test
-func TestSample(t *testing.T) {
-
-	got := add(11, 7)
-	want := 18
-
-	if got != want {
-		t.Errorf("got %q, wanted %q", got, want)
-	}
-}
-
 // Simple GET request test
 func TestGetRequest(t *testing.T) {
 
@@ -286,8 +275,9 @@ func TestExpries(t *testing.T) {
 // test for writing review
 func TestWriteReview(t *testing.T) {
 	data := url.Values{
-		"stars":   {"2"},
-		"message": {"Food mushy. No flavor."},
+		"stars":       {"2"},
+		"message":     {"Food mushy. No flavor."},
+		"restauraunt": {"Burger King"},
 	}
 
 	resp, err := http.PostForm("http://localhost:8080/writeReview", data)
@@ -307,13 +297,17 @@ func TestWriteReview(t *testing.T) {
 	}
 }
 
+
 func TestWelcomeHandler(t *testing.T) {
+
 	data := url.Values{
 		"username": {"1234"},
 		"password": {"1234"},
 	}
 
-	resp, err := http.PostForm("http://localhost:8080/login", data)
+
+	resp, err := http.PostForm("http://localhost:8080/logintest", data)
+
 
 	if err != nil {
 		log.Fatal(err)
@@ -327,11 +321,82 @@ func TestWelcomeHandler(t *testing.T) {
 	// this is still in the works
 	resp, err = http.Get("http://localhost:8080/about")
 
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "true"
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
+	}
+	// this is still in the works
+	resp, err = http.Get("http://localhost:8080/welcome")
+
+
+
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
 		t.Errorf("Redirect failed, expected %d got %d\n", http.StatusFound, resp.StatusCode)
+	}
+}
+
+func TestFavorites(t *testing.T) {
+
+	data := url.Values{
+		"stars":       {"5"},
+		"message":     {"Excelent Food!"},
+		"restauraunt": {"Wendys"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/writeReview", data)
+
+	// this is still in the works
+	resp, err = http.Get("http://localhost:8080/getFavoriteRestaurants")
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "Sent!"
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+
+}
+
+func TestInfo(t *testing.T) {
+	data := url.Values{
+		"age":          {"24"},
+		"weight":       {"141"},
+		"heightfeet":   {"6"},
+		"heightinches": {"3"},
+		"gender":       {"male"},
+		"disorder":     {"1"},
+		"glutenfree":   {"0"},
+		"veggie":       {"0"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/inputInfo", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "Info Collected."
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
 	}
 }

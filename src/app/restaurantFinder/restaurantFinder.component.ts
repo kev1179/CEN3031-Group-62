@@ -1,8 +1,18 @@
 
+
 /*import { Component } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 //import axios from 'axios';
 import { YelpService } from '../services/yelp.service';
+
+import { Component, NgModule } from '@angular/core';
+import axios from 'axios';
+import { FormsModule } from '@angular/forms';
+
+import { Component, OnInit} from '@angular/core';
+import axios from 'axios';
+import {FormsModule} from '@angular/forms';
+
 
 interface YelpBusiness {
   name: string;
@@ -33,6 +43,27 @@ type CustomHeaders = {
 })
 
 export class RestaurantFinderComponent {
+    private configUrl: string = "https://corsanywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=boston&term=steak";
+
+    restaurants: Restaurant[] = [];
+    latitude: number = 0;
+    longitude: number = 0;
+    searchTerm: string = '';
+    priceRange: string = '1';
+  
+    constructor() {
+    }
+
+    ngOnInit() : void {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.getNearbyRestaurants().then(restaurants => {
+          this.restaurants = restaurants;
+        });
+      });
+    }
+
     restaurants: any
     latitude: number = 0;
     longitude: number = 0;
@@ -68,12 +99,64 @@ export class RestaurantFinderComponent {
       };
       const response = await axios.get<YelpResponse>(url, { headers });
       return response.data.businesses.map((business: { name: any; location: { address1: any; }; price: any; }) => ({
+
+    private configUrl: string = "https://corsanywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=boston&term=steak";
+
+    restaurants: Restaurant[] = [];
+    latitude: number = 0;
+    longitude: number = 0;
+    searchTerm: string = '';
+    priceRange: string = '1';
+  
+    constructor() {
+
+    }
+
+    ngOnInit() : void {
+
+      navigator.geolocation.getCurrentPosition(position => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.getNearbyRestaurants().then(restaurants => {
+          this.restaurants = restaurants;
+        });
+      });
+    }
+
+    async getNearbyRestaurants(): Promise<Restaurant[]> {
+      const url = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
+      const headers: CustomHeaders = { 
+        Authorization: 'Bearer vJWO-KwXQeqVoBm0VutG9cYKFLXSGjlkvKkoB722hx7p1Be79r-b127NpgjEv7BkkWPUWP3SRo9DbafqHapy3AApGIqsbUQkAzhmqMxSuIZ5twJSuBj9BhsKl80bZHYx',
+        "Access-Control-Allow-Origin":"*",
+        "x-requested-with": "xmlhttprequest",
+        'Accept': 'application/json'
+      };
+      const response = await axios.get<YelpResponse>(url, { headers });
+      return response.data.businesses.map(business => ({
+
+      return response.data.businesses.map((business: { name: any; location: { address1: any; }; price: any; }) => ({
+
+  
+    async getNearbyRestaurants(): Promise<Restaurant[]> {
+      const url = `https://api.yelp.com/v3/businesses/search?latitude=${this.latitude}&longitude=${this.longitude}&term=${this.searchTerm}&price=${this.priceRange}`;
+      const headers: CustomHeaders = { 
+        Authorization: 'Bearer vJWO-KwXQeqVoBm0VutG9cYKFLXSGjlkvKkoB722hx7p1Be79r-b127NpgjEv7BkkWPUWP3SRo9DbafqHapy3AApGIqsbUQkAzhmqMxSuIZ5twJSuBj9BhsKl80bZHYx',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+      const response = await axios.get<YelpResponse>(url, { headers });
+      return response.data.businesses.map(business => ({
+
         name: business.name,
         address: business.location.address1,
         price: business.price
       }));
     }
-  
+
+
+}
+
+
     
     getNearbyRestaurants() {
       this.yelp.getNearbyRestaurants(this.longitude, this.latitude, this.searchForm.value.searchTerm, this.searchForm.value.priceRange).subscribe(data => {
@@ -161,4 +244,5 @@ export class RestaurantFinderComponent {
           });
         }
     }
+
   
