@@ -275,8 +275,8 @@ func TestExpries(t *testing.T) {
 // test for writing review
 func TestWriteReview(t *testing.T) {
 	data := url.Values{
-		"stars":   {"2"},
-		"message": {"Food mushy. No flavor."},
+		"stars":       {"2"},
+		"message":     {"Food mushy. No flavor."},
 		"restauraunt": {"Burger King"},
 	}
 
@@ -346,9 +346,9 @@ func TestWelcomeHandler(t *testing.T) {
 func TestFavorites(t *testing.T) {
 
 	data := url.Values{
-		"stars":   {"5"},
-		"message": {"Excelent Food!"},
-		"restauraunt" : {"Wendys"},
+		"stars":       {"5"},
+		"message":     {"Excelent Food!"},
+		"restauraunt": {"Wendys"},
 	}
 
 	resp, err := http.PostForm("http://localhost:8080/writeReview", data)
@@ -370,4 +370,33 @@ func TestFavorites(t *testing.T) {
 		t.Errorf("got %q, wanted %q", got, want)
 	}
 
+}
+
+func TestInfo(t *testing.T) {
+	data := url.Values{
+		"age":          {"24"},
+		"weight":       {"141"},
+		"heightfeet":   {"6"},
+		"heightinches": {"3"},
+		"gender":       {"male"},
+		"disorder":     {"1"},
+		"glutenfree":   {"0"},
+		"veggie":       {"0"},
+	}
+
+	resp, err := http.PostForm("http://localhost:8080/inputInfo", data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	result := string(body)
+	got := result
+	want := "Info Collected."
+
+	if got != want {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
 }
