@@ -1,25 +1,62 @@
-<h1>Find Nearby Restaurants</h1>
-
-<form>
-  <label for="searchTerm">Search Term:</label>
-  <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
-
-  <label for="priceRange">Price Range:</label>
-  <select name="priceRange" [ngModel]="priceRange">
-    <option value="1">$</option>
-    <option value="2">$$</option>
-    <option value="3">$$$</option>
-    <option value="4">$$$$</option>
-  </select>
-
-  <button type="button" (click)="submit()">Search</button>
-</form>
-<ul>
-  <li *ngFor="let restaurants of restaurants">
-    {{ restaurants.name }} - {{ restaurants.address }} - {{ restaurants.price }}
-  </li>
-</ul>
-
+<body><!--
+  <form>
+    <label for="searchTerm">Search Term:</label>
+    <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
+    <label for="priceRange">Price Range:</label>
+    <select name="priceRange" [ngModel]="priceRange">
+      <option value="1">$</option>
+      <option value="2">$$</option>
+      <option value="3">$$$</option>
+      <option value="4">$$$$</option>
+    </select>
+    <button type="button" (click)="submit()">Search</button>
+  </form>
+-->
+<div class="container">
+  <div class="row">
+    <div class="offset-md-2 col-lg-5 col-md-7 offert-lg-4 offert-md-3">
+      <div class="panel border bg-white">
+        <div class="panel-heading">
+              <h3 class="pt-3 font-weight-bold">Find a Restaurant</h3>
+        </div>
+        <div class="panel-body p-3">
+          <form>
+            <div class="form-row">
+              <div class="col">
+                <input type="text" name="searchTerm" [(ngModel)]="searchTerm" class="form-control rounded" placeholder="Keyword">
+              </div>
+              <div class="col">
+                <select name="priceRange" [(ngModel)]="priceRange" class="form-control rounded" >
+                  <option value="1">$</option>
+                  <option value="2">$$</option>
+                  <option value="3">$$$</option>
+                  <option value="4">$$$$</option>
+                </select>
+              </div>
+            </div>  
+              <button type="button" (click)="submit()" class="btn btn-outline-primary">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <table class="table table-hover table-sm" *ngIf="restaurants" >
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let restaurants of restaurants">
+      <tr>
+        <td>{{ restaurants.name }}</td>
+        <td>{{ restaurants.address }}</td>
+        <td>{{ restaurants.price }}</td>
+    </tbody>
+  </table>
+</body>
 <!--
 <div *ngFor="let restaurants of restaurants">
   <div class="card">
