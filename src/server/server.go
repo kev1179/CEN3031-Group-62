@@ -552,6 +552,7 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 
 	information := Info{Age: myAge, Weight: myWeight, Height: heightFeet + "'" + heightInches,
 		Gender: gender, Disorder: disorder, GlutenFree: gluten, Veggie: veggie}
+	fmt.Fprintf(w, "Info Collected.")
 	db.Create(&information)
 }
 
@@ -578,14 +579,16 @@ func printHelpScreen() {
 func main() {
 
 	args := os.Args
-	port := ":8080"
+	port := ":8080" // default
 
 	if len(args) > 1 {
+		// prints out the list of handlers provided for the backend
 		if args[1] == "--help" {
 			printHelpScreen()
 			return
 		}
 
+		// if we wish to start at a different port, port must be specified
 		if args[1] == "start" {
 			tempPort := args[2]
 			port = ":" + tempPort
