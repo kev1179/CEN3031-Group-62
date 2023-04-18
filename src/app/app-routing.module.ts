@@ -5,6 +5,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { AboutComponent } from './about/about/about.component';
 import { RestaurantFinderComponent} from './restaurantFinder/restaurantFinder.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { RecipesPageComponent } from './recipes-page/recipes-page.component';
 
 const routes: Routes = [
   {path : '', redirectTo : 'about', pathMatch : 'full'},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path : 'user-registration', component:UserRegistrationComponent},
   {path : 'about', component:AboutComponent},
   {path : 'restaurantFinder', component:RestaurantFinderComponent},
+  { path: 'recipes', component: RecipesPageComponent },
 ];
 
 @NgModule({

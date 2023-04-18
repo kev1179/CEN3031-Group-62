@@ -9,34 +9,6 @@
       <option value="3">$$$</option>
       <option value="4">$$$$</option>
     </select>
-
-<form>
-  <label for="searchTerm">Search Term:</label>
-
-  <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
-
-  <label for="priceRange">Price Range:</label>
-  <select name="priceRange" [ngModel]="priceRange">
-
-  <input type="text" id="searchTerm" [(ngModel)]="searchTerm">
-
-  <label for="priceRange">Price Range:</label>
-  <select id="priceRange" [(ngModel)]="priceRange">
-    <option value="1">$</option>
-    <option value="2">$$</option>
-    <option value="3">$$$</option>
-    <option value="4">$$$$</option>
-  </select>
-
-  <button type="button" (click)="submit()">Search</button>
-</form>
-<ul>
-  <li *ngFor="let restaurants of restaurants">
-    {{ restaurants.name }} - {{ restaurants.address }} - {{ restaurants.price }}
-  </li>
-</ul>
-
-
     <button type="button" (click)="submit()">Search</button>
   </form>
 -->
@@ -98,27 +70,3 @@
   </div>
 </div>
 -->
-
-<h1>Find Nearby Restaurants</h1>
-
-<form>
-  <label for="searchTerm">Search Term:</label>
-  <input type="text" id="searchTerm" [(ngModel)]="searchTerm">
-
-  <label for="priceRange">Price Range:</label>
-  <select id="priceRange" [(ngModel)]="priceRange">
-    <option value="1">$</option>
-    <option value="2">$$</option>
-    <option value="3">$$$</option>
-    <option value="4">$$$$</option>
-  </select>
-
-
-  <button type="button" (click)="getNearbyRestaurants()">Search</button>
-</form>
-
-<ul>
-  <li *ngFor="let restaurant of restaurants">
-    {{ restaurant.name }} - {{ restaurant.address }} - {{ restaurant.price }}
-  </li>
-</ul>
