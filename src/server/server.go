@@ -35,6 +35,9 @@ type Login struct {
 // map stores user sessions
 var sessions = map[string]Session{}
 
+// tracks how many users are currently active
+var activeUsers = 0
+
 // Keeps track of the active user in the browsing session. This may need to be removed as I think a cookie based approach to this problem is better
 // https://www.sohamkamani.com/golang/session-cookie-authentication/
 type Session struct {
@@ -158,6 +161,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if login {
+		activeUsers++
+		fmt.Println("Current Active Users: " + strconv.Itoa(activeUsers))
 		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
 }
@@ -283,6 +288,8 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if login {
+		activeUsers++
+		fmt.Println("Current Active Users: " + strconv.Itoa(activeUsers))
 		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
 }
@@ -459,6 +466,9 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	// remove the users session from the session map
 	delete(sessions, sessionToken)
+	activeUsers--
+	fmt.Println("User was removed")
+	fmt.Println("Current Active Users: " + strconv.Itoa(activeUsers))
 
 	// We need to let the client know that the cookie is expired
 	// In the response, we set the session token to an empty
