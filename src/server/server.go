@@ -27,6 +27,7 @@ type User struct {
 	Email     string
 }
 
+// Class to represent login information
 type Login struct {
 	Username string
 	Password string
@@ -34,6 +35,9 @@ type Login struct {
 
 // map stores user sessions
 var sessions = map[string]Session{}
+
+// tracks how many users are currently active
+var activeUsers = 0
 
 // Keeps track of the active user in the browsing session. This may need to be removed as I think a cookie based approach to this problem is better
 // https://www.sohamkamani.com/golang/session-cookie-authentication/
@@ -43,7 +47,7 @@ type Session struct {
 	expiry time.Time
 }
 
-// Keeps track of data when user makes a comment. We need to figure out how to seperate the comments by page.
+// Keeps track of data when user makes a comment.
 type Comment struct {
 	Username string
 	Time     string
@@ -51,6 +55,7 @@ type Comment struct {
 	Page     string
 }
 
+// Keeps track of data when user writes a review.
 type Review struct {
 	Username    string
 	Time        string
@@ -59,6 +64,7 @@ type Review struct {
 	Stars       float64
 }
 
+// Keeps track of personal data from user.
 type Info struct {
 	Age        int64
 	Weight     float64
@@ -159,6 +165,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if login {
+		activeUsers++
+		fmt.Println("Current Active Users: " + strconv.Itoa(activeUsers))
 		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
 }
@@ -285,6 +293,8 @@ func loginHandlerJSON(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if login {
+		activeUsers++
+		fmt.Println("Current Active Users: " + strconv.Itoa(activeUsers))
 		http.Redirect(w, r, "http://localhost:4200/about", 301)
 	}
 }
@@ -359,6 +369,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // SOURCE: https://www.sohamkamani.com/golang/session-cookie-authentication/
+// greets the logged in user with a welcome message
 func welcomeHandler(w http.ResponseWriter, r *http.Request) {
 	// We can obtain the session token from the requests cookies, which come with every request
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -395,6 +406,7 @@ func welcomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprintf("Welcome %s!", userSession.user.Username)))
 }
 
+// refreshes the session cookie for the user
 func refreshHandler(w http.ResponseWriter, r *http.Request) {
 	// (BEGIN) The code from this point is the same as the first part of the `Welcome` route
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -443,6 +455,7 @@ func refreshHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// once user logs out, it'll reset the session cookie
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -461,6 +474,9 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	// remove the users session from the session map
 	delete(sessions, sessionToken)
+	activeUsers--
+	fmt.Println("User was removed")
+	fmt.Println("Current Active Users: " + strconv.Itoa(activeUsers))
 
 	// We need to let the client know that the cookie is expired
 	// In the response, we set the session token to an empty
@@ -472,6 +488,7 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// puts a review into the database when user writes a review
 func writeReview(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -498,6 +515,7 @@ func writeReview(w http.ResponseWriter, r *http.Request) {
 	db.Create(&review)
 }
 
+// collects favorite restaurants by user from the database
 func getFavoriteRestaurants(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -523,6 +541,7 @@ func getFavoriteRestaurants(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Sent!")
 }
 
+// Puts info/dietary preferences into the database when user posts their information
 func infoHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -558,8 +577,25 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	db.Create(&information)
 }
 
-func printHelpScreen() {
+// prints about screen in terminal
+func printAboutScreen() {
+	fmt.Println("")
+	fmt.Println("Welcome to the backend portion of the Bang For Your Buck website!")
+	fmt.Println("Here we store and organize data received from the client side")
+	fmt.Println("and ensure that the functionality of the website works properly!")
+	fmt.Println("-----------------------------------------------------------------")
+	fmt.Println("Here we have a list of commands that you can use for the terminal to get started:")
+	fmt.Println("")
+	fmt.Println(" - go run server.go - the standard way of running the backend for this website (runs default port 8080)")
+	fmt.Println(" - go run server.go --help - prints the list of API request handlers avaiable")
+	fmt.Println(" - go run server.go start [portNumber] - start up the backend at a custom port")
+	fmt.Println("-----------------------------------------------------------------")
+	fmt.Println("If you would like to revisit the about screen, type the command: go run server.go --about")
+}
 
+// prints help screen in terminal
+func printHelpScreen() {
+	fmt.Println("")
 	fmt.Println("Back-End API request handlers:")
 	fmt.Println("All requests are in the form http://localhost:8080/[handler]")
 	fmt.Println("Here are the handlers implemented:")
@@ -590,10 +626,19 @@ func main() {
 			return
 		}
 
+		if args[1] == "--about" {
+			printAboutScreen()
+			return
+		}
+
 		// if we wish to start at a different port, port must be specified
 		if args[1] == "start" {
 			tempPort := args[2]
 			port = ":" + tempPort
+		} else {
+			fmt.Println("Seems like you typed the command incorrectly.")
+			fmt.Println("Type the command -> go run server.go --about <- for assistance")
+			return
 		}
 	}
 
