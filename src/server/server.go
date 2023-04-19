@@ -556,8 +556,22 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	db.Create(&information)
 }
 
+func printAboutScreen() {
+	fmt.Println("")
+	fmt.Println("Welcome to the backend portion of the Bang For Your Buck website!")
+	fmt.Println("Here we store and organize data received from the client side")
+	fmt.Println("and ensure that the functionality of the website works properly!")
+	fmt.Println("-----------------------------------------------------------------")
+	fmt.Println("Here we have a list of commands that you can use for the terminal to get started:")
+	fmt.Println("")
+	fmt.Println(" - go run server.go - the standard way of running the backend for this website")
+	fmt.Println(" - go run server.go --help - prints the list of API request handlers avaiable")
+	fmt.Println(" - go run server.go start: [portNumber] - start up the backend at a custom port")
+	fmt.Println("-----------------------------------------------------------------")
+	fmt.Println("If you would like to revisit the about screen, type the command: go run server.go --about")
+}
 func printHelpScreen() {
-
+	fmt.Println("")
 	fmt.Println("Back-End API request handlers:")
 	fmt.Println("All requests are in the form http://localhost:8080/[handler]")
 	fmt.Println("Here are the handlers implemented:")
@@ -585,6 +599,11 @@ func main() {
 		// prints out the list of handlers provided for the backend
 		if args[1] == "--help" {
 			printHelpScreen()
+			return
+		}
+
+		if args[1] == "--about" {
+			printAboutScreen()
 			return
 		}
 
