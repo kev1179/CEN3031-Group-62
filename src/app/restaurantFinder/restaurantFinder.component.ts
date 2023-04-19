@@ -78,6 +78,7 @@ export class RestaurantFinderComponent {
   }
 */
     import { Component, OnInit} from '@angular/core';
+    import { Loader } from '@googlemaps/js-api-loader';
     import axios from 'axios';
     import {FormGroup, FormControl} from '@angular/forms';
     import { ReviewService, Review } from '../review.service';
@@ -111,6 +112,7 @@ export class RestaurantFinderComponent {
       styleUrls: ['./restaurantFinder.component.css']
     })
     
+    // google api AIzaSyCotSaf51Alf1UCST9yeT25a27lBXMZ38Y
     export class RestaurantFinderComponent {
     
         //restaurants: Restaurant[] = [];
@@ -119,6 +121,7 @@ export class RestaurantFinderComponent {
         longitude: number = 0;
         searchTerm: string = '';
         priceRange: string = '1';
+        title = "google-maps";
 
         reviews: Review[] = [];
         selectedRestaurant: string = '';
@@ -139,6 +142,18 @@ export class RestaurantFinderComponent {
           navigator.geolocation.getCurrentPosition(position => {
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
+          });
+          let loader = new Loader({
+            apiKey : "AIzaSyCotSaf51Alf1UCST9yeT25a27lBXMZ38Y"
+          });
+
+          loader.load().then(async () => {
+            new google.maps.Map(document.getElementById("map") as HTMLElement,{
+              center: {lat: this.latitude, lng: this.longitude },
+              zoom: 6
+            })
+            //const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+            //map = new Map(document.getElementById("map") as HTMLElement)
           });
         }
     
