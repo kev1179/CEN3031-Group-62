@@ -57,4 +57,3 @@ describe('UserRegistrationComponent', () => {
     component.register();
     expect(console.log).toHaveBeenCalledWith(component.registrationForm.value);
   }); */
-}); 

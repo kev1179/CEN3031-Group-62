@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.component';
+import { RecipesPageComponent } from './recipes-page/recipes-page.component';
+import { RecipeListComponent } from './recipe-list/recipe-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.c
     NavbarComponent,
     UserLoginComponent,
     UserRegistrationComponent,
-    RestaurantFinderComponent
+    RestaurantFinderComponent,
+    RecipeListComponent,
+    RecipesPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +40,7 @@ import { RestaurantFinderComponent } from './restaurantFinder/restaurantFinder.c
   ],
   exports: [],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [RecipesPageComponent],
 })
 export class AppModule { }

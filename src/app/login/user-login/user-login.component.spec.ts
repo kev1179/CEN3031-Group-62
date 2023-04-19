@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+/* import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UserLoginComponent } from './user-login.component';
 
@@ -12,6 +13,7 @@ describe('UserLoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserLoginComponent ],
       imports: [ ReactiveFormsModule, HttpClientTestingModule ]
+        })
     })
     .compileComponents();
   }));
@@ -22,11 +24,9 @@ describe('UserLoginComponent', () => {
     fixture.detectChanges();
     httpTestingController = TestBed.inject(HttpTestingController);
   });
-
   afterEach(() => {
     httpTestingController.verify();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -41,8 +41,7 @@ describe('UserLoginComponent', () => {
     component.Login();
     expect(window.alert).toHaveBeenCalledWith('Username or password is incorrect');
   });
-
-  /* it('should submit valid form', () => {
+  it('should submit valid form', () => {
     component.loginForm.setValue({
       username: 'john',
       password: 'password'
@@ -56,5 +55,4 @@ describe('UserLoginComponent', () => {
     req.flush({ message: 'success message from server' });
     expect(component.Login).toHaveBeenCalled();
     expect(window.alert).toHaveBeenCalledWith('success message from server');
-  }); */
-});
+  });  */

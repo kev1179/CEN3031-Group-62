@@ -1,0 +1,17 @@
+<ng-container *ngIf="!selectedRecipe">
+    <app-recipe-list (recipeSelected)="onRecipeSelected($event)"></app-recipe-list>
+  </ng-container>
+  <ng-container *ngIf="selectedRecipe">
+    <h2>{{selectedRecipe.name}}</h2>
+    <img [src]="selectedRecipe.image" alt="{{selectedRecipe.name}}">
+    <h3>Ingredients</h3>
+    <ul>
+      <li *ngFor="let ingredient of selectedRecipe.ingredients">{{ingredient}}</li>
+    </ul>
+    <h3>Steps</h3>
+    <ol>
+      <li *ngFor="let step of selectedRecipe.steps">{{step}}</li>
+    </ol>
+    <button (click)="clearSelectedRecipe()">Back to recipe list</button>
+  </ng-container>
+

@@ -3,7 +3,6 @@
 import {FormControl, FormGroup} from '@angular/forms';
 //import axios from 'axios';
 import { YelpService } from '../services/yelp.service';
-
 interface YelpBusiness {
   name: string;
   location: {
@@ -11,27 +10,22 @@ interface YelpBusiness {
   };
   price: string;
 }
-
 interface YelpResponse {
   businesses: YelpBusiness[];
 }
-
 interface Restaurant {
   name: string;
   address: string;
   price: string
 }
-
 type CustomHeaders = {
     [key: string]: string;
 };  
-
 @Component({
   selector: 'app-restaurantFinder',
   templateUrl: './restaurantFinder.component.html',
   styleUrls: ['./restaurantFinder.component.css']
 })
-
 export class RestaurantFinderComponent {
     restaurants: any
     latitude: number = 0;
@@ -43,7 +37,6 @@ export class RestaurantFinderComponent {
       searchTerm : new FormControl(),
       priceRange : new FormControl()
     })
-
     constructor(private yelp : YelpService) {
       navigator.geolocation.getCurrentPosition(position => {
         this.latitude = position.coords.latitude;
@@ -87,6 +80,7 @@ export class RestaurantFinderComponent {
     import { Component, OnInit} from '@angular/core';
     import axios from 'axios';
     import {FormGroup, FormControl} from '@angular/forms';
+    import { ReviewService, Review } from '../review.service';
     
     interface YelpBusiness {
       name: string;
@@ -125,13 +119,21 @@ export class RestaurantFinderComponent {
         longitude: number = 0;
         searchTerm: string = '';
         priceRange: string = '1';
+
+        reviews: Review[] = [];
+        selectedRestaurant: string = '';
+        reviewerName: string = '';
+        reviewRating: number = 1;
+        reviewComment: string = '';
         /*
         searchForm = new FormGroup({
           searchTerm : new FormControl(),
           priceRange : new FormControl()
         })*/
-        constructor() {
-        }
+        /*constructor() {
+        }*/
+
+        constructor(private reviewService: ReviewService) {}
     
         ngOnInit() : void {
           navigator.geolocation.getCurrentPosition(position => {
@@ -160,5 +162,34 @@ export class RestaurantFinderComponent {
             this.restaurants = restaurants;
           });
         }
+
+        submitReview() {
+          if (this.selectedRestaurant && this.reviewerName && this.reviewRating && this.reviewComment) {
+            const review: Review = {
+              restaurantName: this.selectedRestaurant,
+              reviewerName: this.reviewerName,
+              reviewRating: this.reviewRating,
+              reviewComment: this.reviewComment,
+            };
+        
+            this.reviewService.postReview(review).subscribe(
+              (response: any) => {
+                console.log('Review submitted:', response);
+                // Add the submitted review to the local reviews array
+                this.reviews.push(review);
+              },
+              (error : any) => {
+                console.error('Error submitting review:', error);
+              }
+            );
+        
+            this.selectedRestaurant = '';
+            this.reviewerName = '';
+            // Remove the line below
+            // this.reviewRating = null;
+            this.reviewComment = '';
+          }
+        }        
+        
     }
   

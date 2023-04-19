@@ -18,4 +18,4 @@ describe('AboutComponent', () => {
   it('should have a title of "About"', () => {
     expect(component.Title).toBeTruthy();
   });
-});
+}); 
