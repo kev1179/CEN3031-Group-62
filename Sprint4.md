@@ -7,8 +7,10 @@
 * The arguments added are:
 * * Print help screen: ``` go run server.go --help``` 
 * * Start server on specific port: ``` go run server.go start [port number]```
+* * Print about screen: ``` go run server.go --about```
 * Added Back-End API for finding the best restaurants in the area.
 * Added Back-End API for finding, storing and retrieving personal information about a user.
+* Added tracker to keep track of the number of active users
 
 # Frontend Unit Tests
 
@@ -61,6 +63,8 @@ Sends a POST request containing the review written, which includes the message a
 Acts like testlogin, but it makes sure to redirect to the about page of the app.
 ### TestFavorites
 Tests functionality of retrieving favorite restaurants from the server.
+### TestInfo
+Sends a POST request containing personal information about the user, including their dietary preferences, and checks to make sure that the data is inserted into the database correctly.
 
 # Backend API
 
