@@ -45,7 +45,8 @@ navigates from home page to login page
 ### Recipe test
 displays various recipes on website
 
-### 
+### find restaurants
+shows restaurant page and nearby restaurants
 
 # Backend Unit Tests 
 
