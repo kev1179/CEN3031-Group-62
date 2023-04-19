@@ -30,9 +30,9 @@ describe('AppComponent', () => {
   });
 });
 
-  /* it('should render title', () => {
+   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.title').textContent).toContain('CEN3031-Group-62');
-  }); */
+  }); 

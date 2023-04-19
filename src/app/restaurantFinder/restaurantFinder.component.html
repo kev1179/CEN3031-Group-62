@@ -1,4 +1,4 @@
-<body><!--
+<!--
   <form>
     <label for="searchTerm">Search Term:</label>
     <input type="text" name="searchTerm" [(ngModel)]="searchTerm">
@@ -12,6 +12,7 @@
     <button type="button" (click)="submit()">Search</button>
   </form>
 -->
+<body>
 <div class="container">
   <div class="row">
     <div class="offset-md-2 col-lg-5 col-md-7 offert-lg-4 offert-md-3">
@@ -23,10 +24,10 @@
           <form>
             <div class="form-row">
               <div class="col">
-                <input type="text" name="searchTerm" [(ngModel)]="searchTerm" class="form-control rounded" placeholder="Keyword">
+                <input id="term" type="text"  [(ngModel)]="searchTerm" class="form-control rounded" placeholder="Keyword">
               </div>
               <div class="col">
-                <select name="priceRange" [(ngModel)]="priceRange" class="form-control rounded" >
+                <select id="range" name="priceRange" [(ngModel)]="priceRange" class="form-control rounded" >
                   <option value="1">$</option>
                   <option value="2">$$</option>
                   <option value="3">$$$</option>
@@ -41,7 +42,13 @@
     </div>
   </div>
 </div>
-  <table class="table table-hover table-sm" *ngIf="restaurants" >
+<div class="float-container">
+  <div class="float-child">
+    <div class="full" id="map">
+    </div>
+  </div>
+  <div class="float-child table-wrapper ">
+  <table class="table table-hover table-sm " *ngIf="restaurants" >
     <thead>
       <tr>
         <th scope="col">Name</th>
@@ -56,6 +63,37 @@
         <td>{{ restaurants.price }}</td>
     </tbody>
   </table>
+</div>
+</div>
+  <div class="cont">
+    <div class="row">
+      <div class="col">
+        <h3 class="pt-3 font-weight-bold">Write a Review</h3>
+        <form (ngSubmit)="submitReview()">
+          <div>
+            <label for="restaurant">Restaurant:</label>
+            <select id="restaurant" [(ngModel)]="selectedRestaurant" name="selectedRestaurant" required>
+              <option *ngFor="let restaurant of restaurants" [value]="restaurant.name">{{restaurant.name}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="name">Your name:</label>
+            <input type="text" id="name" [(ngModel)]="reviewerName" name="reviewerName" required>
+          </div>
+          <div>
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" min="1" max="5" [(ngModel)]="reviewRating" name="reviewRating" required>
+          </div>
+          <div>
+            <label for="comment">Comment:</label>
+            <textarea id="comment" [(ngModel)]="reviewComment" name="reviewComment" required></textarea>
+          </div>
+          <button type="submit">Submit Review</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </body>
 <!--
 <div *ngFor="let restaurants of restaurants">

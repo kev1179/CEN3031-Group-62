@@ -499,7 +499,7 @@ func writeReview(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("POST request successful")
 	reviewMessage := r.FormValue("message")
-	restauraunt := r.FormValue("restauraunt")
+	restauraunt := r.FormValue("restaurant")
 	numStars := r.FormValue("stars")
 	currentTime := time.Now()
 	db, err := gorm.Open(sqlite.Open("reviews.db"), &gorm.Config{})

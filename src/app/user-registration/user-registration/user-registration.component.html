@@ -45,35 +45,35 @@
                   <form [formGroup]="registrationForm">
                       <div class="form-group pt-3">
                         <div class="input-field" [class.error]="registrationForm.controls['firstName'].dirty && registrationForm.hasError('required', 'firstName')">
-                            <input formControlName="firstName" type="text" placeholder="First Name">
+                            <input id="fName" formControlName="firstName" type="text" placeholder="First Name">
                         </div>
                       </div>
                       <small *ngIf="registrationForm.controls['firstName'].dirty && registrationForm.hasError('required', 'firstName')" class="text-danger">*Firstname is required</small>
                       <div class="form-group pt-3" [class.error]="registrationForm.controls['lastName'].dirty && registrationForm.hasError('required', 'lastName')">
                         <div class="input-field">
-                            <input formControlName="lastName" type="text" placeholder="Last Name">
+                            <input id="lName" formControlName="lastName" type="text" placeholder="Last Name">
                         </div>
                       </div>
                       <small *ngIf="registrationForm.controls['lastName'].dirty && registrationForm.hasError('required', 'lastName')" class="text-danger">*Lastname is required</small>
                       <div class="form-group pt-3" [class.error]="registrationForm.controls['userName'].dirty && registrationForm.hasError('required', 'userName')">
                           <div class="input-field">
-                              <input formControlName="userName" type="text" placeholder="Username">
+                              <input id="userN" formControlName="userName" type="text" placeholder="Username">
                           </div>
                       </div>
                       <small *ngIf="registrationForm.controls['userName'].dirty && registrationForm.hasError('required', 'userName')" class="text-danger">*Username is required</small>
                       <div class="form-group pt-3" [class.error]="registrationForm.controls['email'].dirty && registrationForm.hasError('required', 'email')">
                         <div class="input-field">
-                            <input formControlName="email" type="text" placeholder="Email">
+                            <input id="email" formControlName="email" type="text" placeholder="Email">
                         </div>
                     </div>
                     <small *ngIf="registrationForm.controls['email'].dirty && registrationForm.hasError('required', 'email')" class="text-danger">*Email is required</small>
                       <div class="form-group pt-3" [class.error]="registrationForm.controls['password'].dirty && registrationForm.hasError('required', 'password')">
                           <div class="input-field">
-                              <input formControlName="password" type="password" placeholder="Password">
+                              <input id="pass" formControlName="password" type="password" placeholder="Password">
                           </div>
                       </div>
                       <small *ngIf="registrationForm.controls['password'].dirty && registrationForm.hasError('required', 'password')" class="text-danger">*Password is required</small>
-                      <button (click)="register()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Login</button>
+                      <button id="register" (click)="register()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Login</button>
                       <div class="text-center pt-4 text-muted">Already have an account? <a id="forget" routerLink="/login" >Login</a></div>
                   </form>
                   <!--
