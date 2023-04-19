@@ -58,15 +58,44 @@
     margin-left: auto;
     margin-right: auto;
   }
-
+/*
   .table {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 40vw;
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    margin-left: 52%;
     background: #ccc;
+  }*/
+
+  .table-wrapper {
+    max-height: 50vh;
+    overflow-y: scroll;
+    background: #ccc;
+    width: 40vw;
+    margin-left: 10%;
+    margin-top: 1%;
   }
+  
 
   .full {
-    width: 100vw;
-    height: 100vh;
+    width:40vw;
+    margin-left: 2%;
+    height: 50vh;
   }
+
+  .float-container {
+
+    padding: 20px;
+  }
+
+  .float-child {
+    width: 40vw;
+    float: left;
+    padding: 20px;
+
+} 
+.cont {
+  margin-top: 30%;
+}
