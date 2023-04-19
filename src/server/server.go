@@ -564,9 +564,9 @@ func printAboutScreen() {
 	fmt.Println("-----------------------------------------------------------------")
 	fmt.Println("Here we have a list of commands that you can use for the terminal to get started:")
 	fmt.Println("")
-	fmt.Println(" - go run server.go - the standard way of running the backend for this website")
+	fmt.Println(" - go run server.go - the standard way of running the backend for this website (runs default port 8080)")
 	fmt.Println(" - go run server.go --help - prints the list of API request handlers avaiable")
-	fmt.Println(" - go run server.go start: [portNumber] - start up the backend at a custom port")
+	fmt.Println(" - go run server.go start [portNumber] - start up the backend at a custom port")
 	fmt.Println("-----------------------------------------------------------------")
 	fmt.Println("If you would like to revisit the about screen, type the command: go run server.go --about")
 }
@@ -611,6 +611,10 @@ func main() {
 		if args[1] == "start" {
 			tempPort := args[2]
 			port = ":" + tempPort
+		} else {
+			fmt.Println("Seems like you typed the command incorrectly.")
+			fmt.Println("Type the command -> go run server.go --about <- for assistance")
+			return
 		}
 	}
 
