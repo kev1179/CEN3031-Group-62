@@ -12,6 +12,6 @@
     <ol>
       <li *ngFor="let step of selectedRecipe.steps">{{step}}</li>
     </ol>
-    <button (click)="clearSelectedRecipe()">Back to recipe list</button>
+    <button id="clear" (click)="clearSelectedRecipe()">Back to recipe list</button>
   </ng-container>
 

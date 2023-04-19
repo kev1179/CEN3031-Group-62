@@ -24,10 +24,10 @@
           <form>
             <div class="form-row">
               <div class="col">
-                <input type="text" name="searchTerm" [(ngModel)]="searchTerm" class="form-control rounded" placeholder="Keyword">
+                <input id="term" type="text"  [(ngModel)]="searchTerm" class="form-control rounded" placeholder="Keyword">
               </div>
               <div class="col">
-                <select name="priceRange" [(ngModel)]="priceRange" class="form-control rounded" >
+                <select id="range" name="priceRange" [(ngModel)]="priceRange" class="form-control rounded" >
                   <option value="1">$</option>
                   <option value="2">$$</option>
                   <option value="3">$$$</option>
