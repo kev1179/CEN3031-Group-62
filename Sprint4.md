@@ -1,6 +1,9 @@
 # Work Completed in Sprint 4
 ### Frontend
-* [Insert work here]
+* Added google maps api to show location of restaurants
+* Added recipes page to display various recipes for users to try
+* Added review feature for users to review various restaurants
+* updated styling of website
 
 ### Backend
 * Added command line arguments to the back-end.
@@ -33,6 +36,16 @@ Test to make sure the cookie component sends a request with the cookie header.
 
 ### Login User
 Basic test that fills out information on the login page.
+### Register User
+basic test that fills out registration page and submits form
+
+### Navigation test
+navigates from home page to login page
+
+### Recipe test
+displays various recipes on website
+
+### 
 
 # Backend Unit Tests 
 
